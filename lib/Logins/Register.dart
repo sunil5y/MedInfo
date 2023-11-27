@@ -9,7 +9,7 @@ class Register extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.greenAccent,
+      backgroundColor: Colors.cyan[50],
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -140,11 +140,8 @@ class Register extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      LoginWiths(imagePath:"assets/images/facebook.png"),
-                      SizedBox(width: 10.0,),
                       LoginWiths(imagePath:"assets/images/google.png"),
-                      SizedBox(width: 10.0,),
-                      LoginWiths(imagePath:"assets/images/Instagram.jpg")
+
                     ],
                   )
                 ],

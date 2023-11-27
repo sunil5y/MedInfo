@@ -10,7 +10,7 @@ class LoginWiths extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(20),
       decoration: BoxDecoration(border: Border.all(color: Colors.white),
-      borderRadius: BorderRadius.circular(30),color: Colors.greenAccent),
+      borderRadius: BorderRadius.circular(30),color: Colors.cyan[50]),
       child: Image.asset(imagePath,height: 40,),
     );
   }
