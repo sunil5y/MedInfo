@@ -60,7 +60,7 @@ class HomePage extends StatelessWidget {
                       children: [
                         // Example Image Widget
                         Image.asset(
-                          'assets/images/facebook.png', // Replace with your image URL
+                          'assets/images/thermometer.png', // Replace with your image URL
                           width: 120,
                           height: 100,
                           fit: BoxFit.cover,
