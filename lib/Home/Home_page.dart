@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
 
-
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
+  final List<String> categoryImages = [
+    'Tablet',
+    'Liquid',
+    'Capsule',
+    'Thermometer',
+    'Syringe',
+    'Spray',
+    'Cream/Ointment',
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
+      body: Stack(
+        children: [
+          Image.asset(
+            'assets/images/background.png', // Replace with your background image URL
+            fit: BoxFit.cover,
+            height: double.infinity,
+            width: double.infinity,
+          ),
+       Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(top: 15),
               child: TextField(
                 decoration: InputDecoration(
                   suffixIcon: Icon(Icons.search),
@@ -19,43 +32,56 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              height: MediaQuery.of(context).size.height - kToolbarHeight - kBottomNavigationBarHeight,
-              child: GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 5,
-                  crossAxisSpacing: 8.0,
-                  mainAxisSpacing: 8.0,
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Text(
+                "Explore Categories",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
+              ),
+            ),
+            Container(
+              height: 150,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 7,
                 itemBuilder: (context, index) {
                   return Container(
-                    color: Colors.blue,
+                    width: 110,
+                    margin: EdgeInsets.all(8),
+                    color: Colors.cyan[50],
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          'assets/images/facebook.png', // Replace with your image URL
-                          height: 50,
-                          width: 50,
+                        // Example Image Widget
+                        Image.network(
+                          'https://placekitten.com/120/120', // Replace with your image URL
+                          width: 120,
+                          height: 100,
                           fit: BoxFit.cover,
                         ),
+                        // Example Heading Text
                         SizedBox(height: 8),
                         Text(
-                          'Item $index',
-                          style: TextStyle(color: Colors.white),
+                          categoryImages[index],
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ],
                     ),
                   );
                 },
-                itemCount: 5,
               ),
             ),
           ],
         ),
+        ],
       ),
-
     );
   }
 }
