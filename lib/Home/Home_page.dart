@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'Ads.dart';
+
 class HomePage extends StatelessWidget {
   final List<String> categoryImages = [
     'Tablet',
@@ -58,7 +60,7 @@ class HomePage extends StatelessWidget {
                       children: [
                         // Example Image Widget
                         Image.asset(
-                          '', // Replace with your image URL
+                          'assets/images/facebook.png', // Replace with your image URL
                           width: 120,
                           height: 100,
                           fit: BoxFit.cover,
@@ -78,6 +80,8 @@ class HomePage extends StatelessWidget {
                 },
               ),
             ),
+            SizedBox(height: 50,),
+            Ads(),
           ],
         ),
         ],
