@@ -57,8 +57,8 @@ class HomePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         // Example Image Widget
-                        Image.network(
-                          'https://placekitten.com/120/120', // Replace with your image URL
+                        Image.asset(
+                          '', // Replace with your image URL
                           width: 120,
                           height: 100,
                           fit: BoxFit.cover,
