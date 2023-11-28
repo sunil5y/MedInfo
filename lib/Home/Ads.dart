@@ -14,12 +14,12 @@ class _AdsState extends State<Ads> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.cyan[50],
+      color: Color(0xffd9f2ef),
       child: Center(child:
         Column(
           children: [
             SizedBox(
-              height: 350,
+              height: 250,
               child: PageView.builder(
                 itemCount: 2,
                 onPageChanged: (value){
@@ -34,13 +34,14 @@ class _AdsState extends State<Ads> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: Image.asset("assets/images/ads1.png",
-                      height: 350,fit: BoxFit.cover,),
+                      height: 250,fit: BoxFit.cover,),
                   ),
                 );
               }
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 5,),
+
             SizedBox(
               height: 50,
               width: 100,

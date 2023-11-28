@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "922988308241",
+    "project_id": "medinfo-185ca",
+    "storage_bucket": "medinfo-185ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922988308241:android:22ab72ad453a722404ceb0",
+        "android_client_info": {
+          "package_name": "medinfo.com.example.medinfo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6aJxDYpcp8N8nSsTB5JOf-3jZX2YNTa0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
