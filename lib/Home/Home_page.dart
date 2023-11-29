@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'Navigation_bar.dart';
 import 'Ads.dart';
 
 class HomePage extends StatelessWidget {
@@ -82,6 +83,7 @@ class HomePage extends StatelessWidget {
             ),
             SizedBox(height: 50,),
             Ads(),
+            Navigation_bar()
           ],
         ),
         ],
