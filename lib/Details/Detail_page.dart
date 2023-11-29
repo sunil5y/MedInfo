@@ -96,29 +96,29 @@ class DetailPage extends StatelessWidget {
                 ),
 
                 // 2nd Tab
-                Container(
-                  child: Center(
-                    child: RichText(
-                      textAlign: TextAlign.left,
-                      text: const TextSpan(
-                        style: TextStyle(
-                          fontSize: 15,
+                Align(
+                    alignment: Alignment.bottomLeft,
+                      child: RichText(
+                        textAlign: TextAlign.left,
+                        text: const TextSpan(
+                          style: TextStyle(
+                            fontSize: 15,
+                          ),
+
+                          children: <TextSpan>[
+                            TextSpan(text: 'Side Effects:\n', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blue, height: 2)),
+                            TextSpan(text: 'Diarrhea:\n'),
+                            TextSpan(text: 'increased sweating\n'),
+                            TextSpan(text: 'loss of appetite\n'),
+                            TextSpan(text: 'nausea or vomiting\n'),
+                            TextSpan(text: 'stomach cramps or pain\n'),
+                            TextSpan(text: 'swelling or pain in the upper abdomen '),
+
+                          ],
                         ),
-
-                        children: <TextSpan>[
-                          TextSpan(text: 'Side Effects:\n', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blue, height: 2)),
-                          TextSpan(text: 'Diarrhea:\n'),
-                          TextSpan(text: 'increased sweating\n'),
-                          TextSpan(text: 'loss of appetite\n'),
-                          TextSpan(text: 'nausea or vomiting\n'),
-                          TextSpan(text: 'stomach cramps or pain\n'),
-                          TextSpan(text: 'swelling or pain in the upper abdomen '),
-
-                        ],
                       ),
-                    ),
+
                   ),
-                ),
 
                 // 3rd Tab
                 Container(
@@ -133,16 +133,7 @@ class DetailPage extends StatelessWidget {
             SizedBox(height: 3),
             // Display other relevant information
 
-            Text(
-              'Price: \$99.99',
-              style: TextStyle(fontSize: 18, color: Colors.green),
-            ),
-            SizedBox(height: 8),
-            Text(
-              'In Stock: 10 units',
-              style: TextStyle(fontSize: 18, color: Colors.blue),
-            ),
-            SizedBox(height: 10),
+
             // Add a button for further actions (e.g., Add to Cart)
 
             TextButton(
@@ -168,7 +159,7 @@ class DetailPage extends StatelessWidget {
               ),
             ),
 
-            SizedBox(height: 60),
+            SizedBox(height: 80),
 
           ],
         ),
