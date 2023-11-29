@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:medinfo/Home/Home_page.dart';
+
+import '../Home/Navigation_bar.dart';
 
 
 
 class DetailPage extends StatelessWidget {
+
+  int _selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -51,18 +58,21 @@ class DetailPage extends StatelessWidget {
                     Icons.medication,
                     color: Colors.deepPurple,
                   ),
+                    text: 'Dosages',
                   ),
 
                   Tab(icon: Icon(
                     Icons.medical_services_outlined,
                     color: Colors.deepPurple,
                   ),
+                    text: 'Side Effects',
                   ),
 
                   Tab(icon: Icon(
                     Icons.add_circle,
                     color: Colors.deepPurple,
                   ),
+                    text: 'Precaution',
                   ),
 
                 ],),
@@ -70,34 +80,32 @@ class DetailPage extends StatelessWidget {
             Expanded(
               child: TabBarView(children: [
                 // 1st Tab
-                Container(
-                  child: Center(
-                    child: RichText(
-                      textAlign: TextAlign.left,
-                      text: const TextSpan(
-                        style: TextStyle(
-                          fontSize: 15,
-                        ),
-
-                        children: <TextSpan>[
-                          TextSpan(text: 'Dosage:\n', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blue, height: 2)),
-                          TextSpan(text: 'Adults:\n', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red)),
-                          TextSpan(text: '500-1000 mg every 4-6 hours\n'),
-                          TextSpan(text: 'Max daily: 4000 mg\n'),
-                          TextSpan(text: 'Children:\n', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, height: 2)),
-                          TextSpan(text: 'Follow weight-based instructions\n'),
-                          TextSpan(text: 'As directed by a healthcare professional\n'),
-                          TextSpan(text: 'Avoid exceeding recommended doses'),
-
-                        ],
-                      ),
+                Align(
+                alignment: Alignment.topLeft,
+                child: RichText(
+                  textAlign: TextAlign.left,
+                  text: const TextSpan(
+                    style: TextStyle(
+                      fontSize: 15,
                     ),
+                    children: <TextSpan>[
+                      TextSpan(text: 'Dosage:\n', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blue, height: 2)),
+                      TextSpan(text: 'Adults:\n', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red)),
+                      TextSpan(text: '500-1000 mg every 4-6 hours\n'),
+                      TextSpan(text: 'Max daily: 4000 mg\n'),
+                      TextSpan(text: 'Children:\n', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, height: 2)),
+                      TextSpan(text: 'Follow weight-based instructions\n'),
+                      TextSpan(text: 'As directed by a healthcare professional\n'),
+                      TextSpan(text: 'Avoid exceeding recommended doses'),
+                    ],
                   ),
                 ),
+                ),
+
 
                 // 2nd Tab
                 Align(
-                    alignment: Alignment.bottomLeft,
+                    alignment: Alignment.topLeft,
                       child: RichText(
                         textAlign: TextAlign.left,
                         text: const TextSpan(
@@ -159,11 +167,43 @@ class DetailPage extends StatelessWidget {
               ),
             ),
 
-            SizedBox(height: 80),
-
+            SizedBox(height: 2),
           ],
         ),
       ),
+
+        bottomNavigationBar: Container(
+          color: Colors.lightBlue,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
+            child: GNav(
+                backgroundColor: Colors.lightBlue,
+                color: Colors.white,
+                activeColor: Colors.white,
+                tabBackgroundColor: Colors.blue.shade900,
+                padding: EdgeInsets.all(8),
+                gap: 20,
+                tabs: [
+                  GButton(
+                      icon: Icons.home,
+                      text: 'Home'),
+
+                  GButton(
+                      icon: Icons.shop,
+                      text: 'Cart'),
+
+                  GButton(
+                      icon: Icons.search,
+                      text: 'Search'),
+
+                  GButton(
+                      icon: Icons.person,
+                      text: 'Profile'),
+                ]
+
+            ),
+          ),
+        ),
       ),
     );
   }
