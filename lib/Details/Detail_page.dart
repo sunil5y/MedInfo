@@ -189,7 +189,7 @@ class DetailPage extends StatelessWidget {
                       text: 'Home'),
 
                   GButton(
-                      icon: Icons.shop,
+                      icon: Icons.shopping_cart,
                       text: 'Cart'),
 
                   GButton(

@@ -122,7 +122,7 @@ class Register extends StatelessWidget {
                     child: Container(
                       height: 50,
                       alignment: Alignment.center,
-                      child: Text("Login",style: TextStyle(
+                      child: Text("Register",style: TextStyle(
                           fontWeight: FontWeight.bold,fontSize: 24,
                           color: Colors.white),
                       ),

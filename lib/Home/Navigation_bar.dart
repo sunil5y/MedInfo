@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 
 
 import 'Home_page.dart';
@@ -18,37 +17,35 @@ class _Navigation_bar extends State<Navigation_bar> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      bottomNavigationBar: Container(
-        color: Colors.lightBlue,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
-          child: GNav(
-              backgroundColor: Colors.lightBlue,
-              color: Colors.white,
-              activeColor: Colors.white,
-              tabBackgroundColor: Colors.blue.shade900,
-              padding: EdgeInsets.all(8),
-              gap: 20,
-              tabs: [
-                GButton(
-                    icon: Icons.home,
-                    text: 'Home'),
+      bottomNavigationBar: BottomNavigationBar(
 
-                GButton(
-                    icon: Icons.shop,
-                    text: 'Cart'),
+          items:const[
+            BottomNavigationBarItem(
+              icon:Icon(Icons.home),
+              label: 'Home',
+              backgroundColor: Colors.blue,
+            ),
 
-                GButton(
-                    icon: Icons.search,
-                    text: 'Search'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shop),
+              label: 'Shop',
+              backgroundColor: Colors.red,
+            ),
 
-                GButton(
-                    icon: Icons.person,
-                    text: 'Profile'),
-              ]
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Search',
+              backgroundColor: Colors.green,
+            ),
 
-          ),
-        ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
+              backgroundColor: Colors.deepOrange,
+            ),
+
+
+          ]
       ),
     );
   }

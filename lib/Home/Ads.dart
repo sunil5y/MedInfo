@@ -19,7 +19,7 @@ class _AdsState extends State<Ads> {
         Column(
           children: [
             SizedBox(
-              height: 350,
+              height: 200,
               child: PageView.builder(
                 itemCount: 2,
                 onPageChanged: (value){
@@ -33,7 +33,7 @@ class _AdsState extends State<Ads> {
                   padding: const EdgeInsets.all(20.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: Image.asset("assets/images/ads1.png",
+                    child: Image.asset("assets/images/ads.png",
                       height: 350,fit: BoxFit.cover,),
                   ),
                 );
