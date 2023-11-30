@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medinfo/Cart/cart_page.dart';
 import 'package:medinfo/Details/Detail_page.dart';
 
 import 'Ads.dart';
@@ -120,7 +121,7 @@ class HomePageState extends State<HomePage>{
         controller: _pageController,
         children: [
           homeitems(size),
-          DetailPage(),
+          MyCart(),
           homeitems(size),
           homeitems(size),
         ],

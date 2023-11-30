@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medinfo/Cart/cart_page.dart';
 import 'package:medinfo/Details/Detail_page.dart';
 
 import 'Logins/Login.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Login(),
+      home: MyCart(),
     );
   }
 }
