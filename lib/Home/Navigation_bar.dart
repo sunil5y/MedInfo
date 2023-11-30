@@ -27,7 +27,7 @@ class _Navigation_bar extends State<Navigation_bar> {
             ),
 
             BottomNavigationBarItem(
-              icon: Icon(Icons.shop),
+              icon: Icon(Icons.shopping_cart),
               label: 'Shop',
               backgroundColor: Colors.red,
             ),

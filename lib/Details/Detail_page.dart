@@ -172,38 +172,38 @@ class DetailPage extends StatelessWidget {
         ),
       ),
 
-        bottomNavigationBar: Container(
-          color: Colors.lightBlue,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
-            child: GNav(
-                backgroundColor: Colors.lightBlue,
-                color: Colors.white,
-                activeColor: Colors.white,
-                tabBackgroundColor: Colors.blue.shade900,
-                padding: EdgeInsets.all(8),
-                gap: 20,
-                tabs: [
-                  GButton(
-                      icon: Icons.home,
-                      text: 'Home'),
-
-                  GButton(
-                      icon: Icons.shopping_cart,
-                      text: 'Cart'),
-
-                  GButton(
-                      icon: Icons.search,
-                      text: 'Search'),
-
-                  GButton(
-                      icon: Icons.person,
-                      text: 'Profile'),
-                ]
-
-            ),
-          ),
-        ),
+        // bottomNavigationBar: Container(
+        //   color: Colors.lightBlue,
+        //   child: Padding(
+        //     padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
+        //     child: GNav(
+        //         backgroundColor: Colors.lightBlue,
+        //         color: Colors.white,
+        //         activeColor: Colors.white,
+        //         tabBackgroundColor: Colors.blue.shade900,
+        //         padding: EdgeInsets.all(8),
+        //         gap: 20,
+        //         tabs: [
+        //           GButton(
+        //               icon: Icons.home,
+        //               text: 'Home'),
+        //
+        //           GButton(
+        //               icon: Icons.shopping_cart,
+        //               text: 'Cart'),
+        //
+        //           GButton(
+        //               icon: Icons.search,
+        //               text: 'Search'),
+        //
+        //           GButton(
+        //               icon: Icons.person,
+        //               text: 'Profile'),
+        //         ]
+        //
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }
