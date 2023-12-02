@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:medinfo/Home/Home_page.dart';
 
-import '../Home/Navigation_bar.dart';
-
-
 
 class DetailPage extends StatelessWidget {
 
@@ -62,14 +59,14 @@ class DetailPage extends StatelessWidget {
                   ),
 
                   Tab(icon: Icon(
-                    Icons.medical_services_outlined,
+                    Icons.add_circle,
                     color: Colors.deepPurple,
                   ),
                     text: 'Side Effects',
                   ),
 
                   Tab(icon: Icon(
-                    Icons.add_circle,
+                    Icons.medical_services_outlined,
                     color: Colors.deepPurple,
                   ),
                     text: 'Precaution',

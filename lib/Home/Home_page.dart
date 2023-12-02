@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:medinfo/Cart/cart_page.dart';
 import 'package:medinfo/Details/Detail_page.dart';
+import 'package:medinfo/Profile/Profile_page.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
+import '../Cart/cart_page.dart';
 import 'Ads.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,6 +31,7 @@ class HomePageState extends State<HomePage>{
     });
     _pageController.jumpToPage(value);
   }
+
   final PageController _pageController = PageController();
   homeitems(size){
     return SingleChildScrollView(
@@ -44,28 +47,56 @@ class HomePageState extends State<HomePage>{
               height: double.infinity,
               width: double.infinity,
             ),
+
+
+
+
             Column(
               children: [
+
                 Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Image.asset('assets/images/facebook.png', height: 50),
+                ),
+
+                SizedBox(height: 30),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: TextField(
                     decoration: InputDecoration(
                       suffixIcon: Icon(Icons.search),
                       hintText: 'Search...',
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blue),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blue),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Text(
-                    "Explore Categories",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
+
+                SizedBox(height: 20),
+
+                Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 1),
+                      child: const Text('Explore Categories',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),),
+                    )
+
+                  ],
                 ),
+
+                SizedBox(height: 5),
+
                 Container(
                   height: 150,
                   child: ListView.builder(
@@ -79,6 +110,7 @@ class HomePageState extends State<HomePage>{
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+
                             // Example Image Widget
                             Image.asset(
                               'assets/images/thermometer.jpg', // Replace with your image URL
@@ -86,6 +118,7 @@ class HomePageState extends State<HomePage>{
                               height: 100,
                               fit: BoxFit.cover,
                             ),
+
                             // Example Heading Text
                             SizedBox(height: 8),
                             Text(
@@ -101,7 +134,7 @@ class HomePageState extends State<HomePage>{
                     },
                   ),
                 ),
-                SizedBox(height: 50,),
+
                 Ads(),
 
 
@@ -121,35 +154,46 @@ class HomePageState extends State<HomePage>{
         controller: _pageController,
         children: [
           homeitems(size),
+          DetailPage(),
+          homeitems(size),
           MyCart(),
-          homeitems(size),
-          homeitems(size),
+          Profile(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(items: const [
-        BottomNavigationBarItem(
+      bottomNavigationBar: SalomonBottomBar(items: [
+        SalomonBottomBarItem(
           icon: Icon(Icons.home),
-          label: 'Home',
-          backgroundColor: Colors.blue,
+          title: Text("Home"),
+          selectedColor: Colors.white,
         ),
-        BottomNavigationBarItem(
+
+        SalomonBottomBarItem(
+          icon: Icon(Icons.local_hospital),
+          title: Text("Medicine"),
+          selectedColor: Colors.white,
+        ),
+
+        SalomonBottomBarItem(
+          icon: Icon(Icons.camera_alt, size: 40),
+          selectedColor: Colors.black,
+          title: Text(''),
+        ),
+
+        SalomonBottomBarItem(
           icon: Icon(Icons.shopping_cart),
-          label: 'Shop',
-          backgroundColor: Colors.red,
+          title: Text("Cart"),
+          selectedColor: Colors.white,
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.search),
-          label: 'Search',
-          backgroundColor: Colors.green,
-        ),
-        BottomNavigationBarItem(
+
+        SalomonBottomBarItem(
           icon: Icon(Icons.person),
-          label: 'Profile',
-          backgroundColor: Colors.deepOrange,
+          title: Text("Profile"),
+          selectedColor: Colors.white,
         ),
       ],
+        backgroundColor: Colors.blue,
         onTap: onTappedBar,
-        // selectedItemColor: Colors.orange,
+        selectedItemColor: Colors.transparent,
         currentIndex: selectedIndex,),
     );
   }
