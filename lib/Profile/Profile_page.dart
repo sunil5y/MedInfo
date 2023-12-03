@@ -35,7 +35,7 @@ class Profile extends StatelessWidget {
                 );
               }),
               SizedBox(height: 20),
-              buildClickableContainer(Icons.download, 'Downloads', () {
+              buildClickableContainer(Icons.download_sharp, 'Downloads', () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => Downloads()),

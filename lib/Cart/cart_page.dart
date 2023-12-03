@@ -19,7 +19,7 @@ class _MyCartState extends State<MyCart> {
   List<String> medicineImage = [
     'https://5.imimg.com/data5/SELLER/Default/2021/12/LK/ON/KX/43755673/paracetamol-500mg-tablet-500x500.jpg',
     'https://www.nepmeds.com.np/public/840-840/files/pantop-3-20200121171027-0uHvWE.jpg',
-    'http://annapurnapharmacy.com/media/cache/thumb_220_220/uploads/medicines/83dccb5b7e9b0432e62f0a743f7eb8bc.jpeg',
+    'https://5.imimg.com/data5/SELLER/Default/2021/12/LK/ON/KX/43755673/paracetamol-500mg-tablet-500x500.jpg',
   ];
 
 

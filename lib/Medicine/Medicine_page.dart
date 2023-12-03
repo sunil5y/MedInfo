@@ -15,6 +15,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        backgroundColor: Colors.red, // Change the primary color to your preference
+      ),
       title: 'Medicine',
       home: MedicineList(),
     );
@@ -38,6 +42,8 @@ class _MedicineListState extends State<MedicineList> {
     MedicineFilter(name: 'Doxysina', category: 'Capsule'),
   ];
 
+  Map<String, List<MedicineFilter>> categoryMap = {};
+
   List<MedicineFilter> filteredProducts = [];
   Set<String> uniqueCategories = Set<String>();
   Set<String> selectedCategories = Set<String>();
@@ -46,6 +52,13 @@ class _MedicineListState extends State<MedicineList> {
   void initState() {
     super.initState();
     uniqueCategories = Set.from(products.map((product) => product.category));
+    uniqueCategories.add('All'); // Add "All" category option
+
+    for (String category in uniqueCategories) {
+      categoryMap[category] = products.where((product) => product.category == category).toList();
+    }
+
+    selectedCategories.add('All'); // Initially select "All"
     filteredProducts = products;
     searchController.addListener(() {
       filterList();
@@ -54,11 +67,18 @@ class _MedicineListState extends State<MedicineList> {
 
   void filterList() {
     setState(() {
-      filteredProducts = products
-          .where((product) =>
-      product.category.toLowerCase().contains(searchController.text.toLowerCase()) &&
-          (selectedCategories.isEmpty || selectedCategories.contains(product.category)))
-          .toList();
+      if (selectedCategories.contains('All')) {
+        filteredProducts = products
+            .where((product) =>
+            product.category.toLowerCase().contains(searchController.text.toLowerCase()))
+            .toList();
+      } else {
+        filteredProducts = products
+            .where((product) =>
+        product.category.toLowerCase().contains(searchController.text.toLowerCase()) &&
+            selectedCategories.contains(product.category))
+            .toList();
+      }
     });
   }
 
@@ -66,7 +86,7 @@ class _MedicineListState extends State<MedicineList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Filterable Product List'),
+        title: Text('Medicine List'),
       ),
       body: Column(
         children: [
@@ -74,24 +94,32 @@ class _MedicineListState extends State<MedicineList> {
             padding: const EdgeInsets.all(8.0),
             child: Wrap(
               spacing: 8.0,
-              children: products
-                  .map((product) => FilterChip(
-                label: Text(product.category),
-                selected: selectedCategories.contains(product.category),
-                onSelected: (selected) {
+              children: uniqueCategories
+                  .map((category) => ElevatedButton(
+                onPressed: () {
                   setState(() {
-                    if (selected) {
-                      selectedCategories.add(product.category);
+                    if (selectedCategories.contains(category)) {
+                      selectedCategories.remove(category);
                     } else {
-                      selectedCategories.remove(product.category);
+                      selectedCategories.clear();
+                      selectedCategories.add(category);
                     }
                   });
                   filterList();
                 },
+                style: ElevatedButton.styleFrom(
+                  primary: selectedCategories.contains(category)
+                      ? Theme.of(context).primaryColorLight
+                      : Theme.of(context).backgroundColor,
+                ),
+                child: Text(category),
               ))
                   .toList(),
             ),
           ),
+
+          SizedBox(height: 15),
+
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
@@ -110,6 +138,9 @@ class _MedicineListState extends State<MedicineList> {
               ),
             ),
           ),
+
+          SizedBox(height: 10),
+
           Expanded(
             child: ListView.builder(
               itemCount: filteredProducts.length,
