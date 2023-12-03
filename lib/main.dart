@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:medinfo/Cart/cart_page.dart';
 import 'package:medinfo/Medicine/Detail_page.dart';
 import 'package:medinfo/Home/Home_page.dart';
+import 'package:medinfo/Medicine/Medicine_page.dart';
 import 'package:medinfo/Payment/Payment_page.dart';
 import 'package:medinfo/Profile/Profile_page.dart';
 
@@ -53,7 +54,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomePage(),
+      home: MedicineList(),
     );
   }
 }
