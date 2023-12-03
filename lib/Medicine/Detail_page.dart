@@ -7,8 +7,6 @@ import '../Payment/Payment_page.dart';
 
 class DetailPage extends StatelessWidget {
 
-  int _selectedIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
