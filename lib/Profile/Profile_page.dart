@@ -3,6 +3,9 @@ import 'package:medinfo/Home/Home_page.dart';
 import 'package:location/location.dart';
 
 import '../Logins/Login.dart';
+import 'Downloads.dart';
+import 'Favourites.dart';
+import 'Order_history.dart';
 
 class Profile extends StatelessWidget {
   @override
@@ -25,11 +28,26 @@ class Profile extends StatelessWidget {
               SizedBox(height: 10),
               buildImage('assets/images/liquid.jpg'),
               SizedBox(height: 40),
-              buildContainer(Icons.my_library_books, 'Order History'),
+              buildClickableContainer(Icons.my_library_books, 'Order History', () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Order_History()),
+                );
+              }),
               SizedBox(height: 20),
-              buildContainer(Icons.download, 'Downloads'),
+              buildClickableContainer(Icons.download, 'Downloads', () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Downloads()),
+                );
+              }),
               SizedBox(height: 20),
-              buildContainer(Icons.favorite_border, 'Favourites'),
+              buildClickableContainer(Icons.favorite_border, 'Favourites', () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Favourites()),
+                );
+              }),
               SizedBox(height: 20),
               buildClickableContainer(Icons.logout, 'Log Out', () {
                 Navigator.push(

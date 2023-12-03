@@ -1,13 +1,27 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:medinfo/Cart/cart_page.dart';
-import 'package:medinfo/Details/Detail_page.dart';
+import 'package:medinfo/Medicine/Detail_page.dart';
 import 'package:medinfo/Home/Home_page.dart';
 import 'package:medinfo/Payment/Payment_page.dart';
 import 'package:medinfo/Profile/Profile_page.dart';
 
 import 'Logins/Login.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: 'AIzaSyByLln293h6wGTlOvScp5wul5d6u1ZXJHE',
+      authDomain: 'medinfo-project-d7837.firebaseapp.com',
+      projectId: 'medinfo-project-d7837',
+      storageBucket: 'medinfo-project-d7837.appspot.com',
+      messagingSenderId: '86562656757',
+      appId: '1:86562656757:android:400e8b134dd4e4fc21d0bc',
+    ),
+
+
+  );
   runApp(const MyApp());
 }
 
@@ -39,7 +53,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Profile(),
+      home: HomePage(),
     );
   }
 }

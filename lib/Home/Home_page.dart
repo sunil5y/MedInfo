@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medinfo/Details/Detail_page.dart';
+import 'package:medinfo/Medicine/Detail_page.dart';
 import 'package:medinfo/Profile/Profile_page.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
@@ -65,7 +65,23 @@ class HomePageState extends State<HomePage>{
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: TextField(
                     decoration: InputDecoration(
-                      suffixIcon: Icon(Icons.search),
+                      suffixIcon: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8.0), // Adjust the right padding as needed
+                            child: Icon(
+                              Icons.search,
+                              color: Colors.deepPurple,),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 15.0), // Adjust the left padding for the camera icon as needed
+                            child: Icon(
+                              Icons.camera_alt,
+                              color: Colors.deepPurple,), // Add your camera icon here
+                          ),
+                        ],
+                      ),
                       hintText: 'Search...',
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.blue),
@@ -75,16 +91,18 @@ class HomePageState extends State<HomePage>{
                         borderSide: BorderSide(color: Colors.blue),
                         borderRadius: BorderRadius.circular(20),
                       ),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 20), // Adjust the padding as needed
                     ),
                   ),
                 ),
+
 
                 SizedBox(height: 20),
 
                 Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(left: 1),
+                      padding: EdgeInsets.only(right: 235.0),
                       child: const Text('Explore Categories',
                         style: TextStyle(
                           fontSize: 20,
@@ -121,6 +139,7 @@ class HomePageState extends State<HomePage>{
 
                             // Example Heading Text
                             SizedBox(height: 8),
+
                             Text(
                               categoryImages[index],
                               style: TextStyle(
@@ -155,7 +174,6 @@ class HomePageState extends State<HomePage>{
         children: [
           homeitems(size),
           DetailPage(),
-          homeitems(size),
           MyCart(),
           Profile(),
         ],
@@ -171,12 +189,6 @@ class HomePageState extends State<HomePage>{
           icon: Icon(Icons.local_hospital),
           title: Text("Medicine"),
           selectedColor: Colors.white,
-        ),
-
-        SalomonBottomBarItem(
-          icon: Icon(Icons.camera_alt, size: 40),
-          selectedColor: Colors.black,
-          title: Text(''),
         ),
 
         SalomonBottomBarItem(

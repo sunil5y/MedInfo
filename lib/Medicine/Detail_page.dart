@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:medinfo/Home/Home_page.dart';
 
+import '../Payment/Payment_page.dart';
+
 
 class DetailPage extends StatelessWidget {
 
@@ -145,7 +147,7 @@ class DetailPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => DetailPage()),
+                  MaterialPageRoute(builder: (context) => Payment()),
                 );
               },
               child: Container(
