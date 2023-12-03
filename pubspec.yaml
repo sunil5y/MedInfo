@@ -39,7 +39,7 @@ dependencies:
   firebase_auth: ^4.15.0
   firebase_core: ^2.24.0
   badges: ^2.0.1
-  location: ^4.3.0
+  location:
   salomon_bottom_bar: ^3.3.2
   image_picker: ^0.8.4
   path_provider: ^2.0.2
