@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medinfo/Medicine/Detail_page.dart';
+import 'package:medinfo/Medicine/Medicine_page.dart';
 import 'package:medinfo/Profile/Profile_page.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
@@ -173,7 +174,7 @@ class HomePageState extends State<HomePage>{
         controller: _pageController,
         children: [
           homeitems(size),
-          DetailPage(),
+          MedicineList(),
           MyCart(),
           Profile(),
         ],

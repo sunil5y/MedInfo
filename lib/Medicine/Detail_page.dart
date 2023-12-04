@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:medinfo/Home/Home_page.dart';
 
+import '../Cart/cart_page.dart';
 import '../Payment/Payment_page.dart';
 
 
@@ -46,7 +47,7 @@ class DetailPage extends StatelessWidget {
               'Description of the item goes here. Provide information about the item, such as its features, specifications, etc.',
               style: TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 2),
+            SizedBox(height: 35),
             // Display other relevant information
 
             TabBar(
@@ -73,6 +74,8 @@ class DetailPage extends StatelessWidget {
                   ),
 
                 ],),
+
+            SizedBox(height: 20),
 
             Expanded(
               child: TabBarView(children: [
@@ -134,18 +137,15 @@ class DetailPage extends StatelessWidget {
 
               ]),
             ),
-            
-            SizedBox(height: 3),
-            // Display other relevant information
-
 
             // Add a button for further actions (e.g., Add to Cart)
 
             TextButton(
               onPressed: () {
+
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Payment()),
+                  MaterialPageRoute(builder: (context) => MyCart()),
                 );
               },
               child: Container(
@@ -164,7 +164,7 @@ class DetailPage extends StatelessWidget {
               ),
             ),
 
-            SizedBox(height: 2),
+            SizedBox(height: 20),
           ],
         ),
       ),

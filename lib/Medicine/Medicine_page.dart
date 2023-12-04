@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'Detail_page.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -26,6 +28,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MedicineList extends StatefulWidget {
+
   @override
   _MedicineListState createState() => _MedicineListState();
 }
@@ -86,73 +89,102 @@ class _MedicineListState extends State<MedicineList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Medicine List'),
+        title: Text('Medicine List', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Wrap(
-              spacing: 8.0,
-              children: uniqueCategories
-                  .map((category) => ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    if (selectedCategories.contains(category)) {
-                      selectedCategories.remove(category);
-                    } else {
-                      selectedCategories.clear();
-                      selectedCategories.add(category);
-                    }
-                  });
-                  filterList();
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: selectedCategories.contains(category)
-                      ? Theme.of(context).primaryColorLight
-                      : Theme.of(context).backgroundColor,
-                ),
-                child: Text(category),
-              ))
-                  .toList(),
-            ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/background.png'), // Replace with your image asset path
+            fit: BoxFit.cover,
           ),
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Wrap(
+                spacing: 8.0,
+                children: uniqueCategories
+                    .map((category) => ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      if (selectedCategories.contains(category)) {
+                        selectedCategories.remove(category);
+                      } else {
+                        selectedCategories.clear();
+                        selectedCategories.add(category);
+                      }
+                    });
+                    filterList();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: selectedCategories.contains(category)
+                        ? Theme.of(context).primaryColorLight
+                        : Theme.of(context).backgroundColor,
+                  ),
+                  child: Text(category),
+                ))
+                    .toList(),
+              ),
+            ),
 
-          SizedBox(height: 15),
+            SizedBox(height: 15),
 
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: searchController,
-              decoration: InputDecoration(
-                labelText: 'Search by Category',
-                suffixIcon: Icon(Icons.search),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blue),
-                  borderRadius: BorderRadius.circular(20),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: searchController,
+                decoration: InputDecoration(
+                  labelText: 'Search by Category',
+                  suffixIcon: Icon(Icons.search),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                 ),
               ),
             ),
-          ),
 
-          SizedBox(height: 10),
+            SizedBox(height: 10),
 
-          Expanded(
-            child: ListView.builder(
-              itemCount: filteredProducts.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(filteredProducts[index].name),
-                  subtitle: Text(filteredProducts[index].category),
-                );
-              },
+            Expanded(
+              child: ListView.builder(
+                itemCount: filteredProducts.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      // Navigate to a new page when a list item is clicked
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailPage(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(4.0), // Add space around each list item
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.red,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: ListTile(
+                        title: Text(filteredProducts[index].name),
+                        subtitle: Text(filteredProducts[index].category),
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
