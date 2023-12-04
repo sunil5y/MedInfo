@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 
+import '../Payment/Payment_page.dart';
+
 
 
 
@@ -30,7 +32,7 @@ class _MyCartState extends State<MyCart> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Medicine List'),
+        title: const Text('Medicine Cart'),
         centerTitle: true,
         actions: [
            Center(
@@ -86,20 +88,34 @@ class _MyCartState extends State<MyCart> {
                                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
                                   ),
                                   SizedBox(height:8),
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Container(
-                                      height: 35,
-                                      width: 100,
-                                     decoration: BoxDecoration(
-                                       color: Colors.green,
-                                        borderRadius: BorderRadius.circular(7)
-                                     ),
-                                     child: Center(
-                                       child: Text('Add to cart', style: TextStyle(color: Colors.white)),
-                                     ),
+
+
+
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => Payment()),
+                                      );
+                                    },
+                                    child: Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Container(
+                                        height: 35,
+                                        width: 100,
+                                        child: Center(
+                                          child: Text(
+                                            "Buy",
+                                            style: TextStyle(color: Colors.white),
+                                          ),
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          borderRadius: BorderRadius.circular(15),
+                                        ),
+                                      ),
                                     ),
-                                  )
+                                  ),
 
                                 ],
                               ),

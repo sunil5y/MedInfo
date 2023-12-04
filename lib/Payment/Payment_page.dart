@@ -7,8 +7,6 @@ import 'package:location/location.dart';
 class Payment extends StatelessWidget {
 
   int _selectedIndex = 0;
-  Location location = Location();
-  LocationData? currentLocation;
 
   @override
   Widget build(BuildContext context) {
@@ -80,17 +78,6 @@ class Payment extends StatelessWidget {
                   fontWeight: FontWeight.bold,),
               ),
 
-              // Display the current location
-              currentLocation != null
-                  ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Latitude: ${currentLocation!.latitude}'),
-                  Text('Longitude: ${currentLocation!.longitude}'),
-                ],
-              )
-                  : CircularProgressIndicator(),
-
               SizedBox(height: 20),
 
               Text(
@@ -126,7 +113,7 @@ class Payment extends StatelessWidget {
                   height: 50,
                   alignment: Alignment.center,
                   child: Text(
-                    "Add to Cart",
+                    "Purchase",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 24,
