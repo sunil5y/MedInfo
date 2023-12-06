@@ -123,32 +123,37 @@ class HomePageState extends State<HomePage>{
                     itemCount: 7,
                     itemBuilder: (context, index) {
                       return Container(
+               
                         width: 110,
                         margin: EdgeInsets.all(8),
-                        color: Colors.cyan[50],
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-
-                            // Example Image Widget
-                            Image.asset(
-                              'assets/images/thermometer.jpg', // Replace with your image URL
-                              width: 120,
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ),
-
-                            // Example Heading Text
-                            SizedBox(height: 8),
-
-                            Text(
-                              categoryImages[index],
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.cyan[50],),
+                        child:ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // Example Image Widget
+                              Image.asset(
+                                'assets/images/thermometer.jpg', // Replace with your image URL
+                                width: 120,
+                                height: 100,
+                                fit: BoxFit.cover,
                               ),
-                            ),
-                          ],
+
+                              // Example Heading Text
+                              SizedBox(height: 8),
+
+                              Text(
+                                categoryImages[index],
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     },

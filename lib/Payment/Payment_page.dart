@@ -1,133 +1,222 @@
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:medinfo/Home/Home_page.dart';
-import 'package:location/location.dart';
 
+void main() {
+  runApp(MyApp());
+}
 
-class Payment extends StatelessWidget {
+enum PaymentMethod { esewa, cashOnDelivery, fonepay, cardOnDelivery }
 
-  int _selectedIndex = 0;
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: PaymentPage(),
+    );
+  }
+}
+
+class PaymentPage extends StatefulWidget {
+  @override
+  _PaymentPageState createState() => _PaymentPageState();
+}
+
+class _PaymentPageState extends State<PaymentPage> {
+  PaymentMethod selectedPaymentMethod = PaymentMethod.esewa;
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Check Out' , style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold),),
-        ),
-
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: Text('Payment', style: TextStyle(fontSize: 25 ,fontWeight: FontWeight.bold)),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
           child: Column(
-
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-
+              Container(
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Total Amount',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      '\$100.00',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+              Card(
+                elevation: 4,
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'Items Total',
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      Text(
+                        'Delivery Charge',
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      Text(
+                        'Grand Total',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
               Text(
-                'Payment Details',
+                'Choose Payment Method:',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
+              ),
+
+              Row(
+                children: [
+                  Expanded(
+                    child: RadioListTile<PaymentMethod>(
+                      title: Text('Esewa'),
+                      value: PaymentMethod.esewa,
+                      groupValue: selectedPaymentMethod,
+                      onChanged: (PaymentMethod? value) {
+                        setState(() {
+                          selectedPaymentMethod = value!;
+                        });
+                      },
+                      activeColor: Colors.green,
+                    ),
+                  ),
+                  Expanded(
+                    child: RadioListTile<PaymentMethod>(
+                      title: Text('Cash On Delivery'),
+                      value: PaymentMethod.cashOnDelivery,
+                      groupValue: selectedPaymentMethod,
+                      onChanged: (PaymentMethod? value) {
+                        setState(() {
+                          selectedPaymentMethod = value!;
+                        });
+                      },
+                      activeColor: Colors.green,
+                    ),
+                  ),
+                ],
+              ),
+
+              Row(
+                children: [
+                  Expanded(
+                    child: RadioListTile<PaymentMethod>(
+                      title: Text('Fonepay'),
+                      value: PaymentMethod.fonepay,
+                      groupValue: selectedPaymentMethod,
+                      onChanged: (PaymentMethod? value) {
+                        setState(() {
+                          selectedPaymentMethod = value!;
+                        });
+                      },
+                      activeColor: Colors.green,
+                    ),
+                  ),
+                  Expanded(
+                    child: RadioListTile<PaymentMethod>(
+                      title: Text('Card On Delivery'),
+                      value: PaymentMethod.cardOnDelivery,
+                      groupValue: selectedPaymentMethod,
+                      onChanged: (PaymentMethod? value) {
+                        setState(() {
+                          selectedPaymentMethod = value!;
+                        });
+                      },
+                      activeColor: Colors.green,
+                    ),
+                  ),
+                ],
               ),
 
               SizedBox(height: 10),
 
-              // Display the item image (replace 'item_image.jpg' with your actual image)
-              Image.asset(
-                'assets/images/liquid.jpg',
-                width: double.infinity,
-                height: 100,
-                fit: BoxFit.cover,
-              ),
-              SizedBox(height: 16),
-              // Display the item title
-              Text(
-                'Items Total',
-                style: TextStyle(
-                  fontSize: 15,
-                ),
-              ),
-              SizedBox(height: 5),
-              // Display additional details about the item
-              Text(
-                'Delivery Charge',
-                style: TextStyle(
-                    fontSize: 15),
-              ),
-
-              SizedBox(height: 5),
-              // Display additional details about the item
-              Text(
-                'Grand Total',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,),
-              ),
-
-              SizedBox(height: 20),
-
-              // Delivery Address
-              Text(
-                'Delivery Address',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,),
-              ),
-
-              SizedBox(height: 20),
-
-              Text(
-                'Payment Method',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-
-              SizedBox(height: 40),
-
-              SizedBox(height: 20),
-
-              Text(
-                'Payment Method',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,),
-              ),
-
-              SizedBox(height: 40),
-
-              // Add a button for further actions (e.g., Add to Cart)
-              TextButton(
+              ElevatedButton(
                 onPressed: () {
+                  // Implement your payment logic here
+                  // For this example, navigate to a success page
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Payment()),
+                    MaterialPageRoute(builder: (context) => PaymentSuccessPage()),
                   );
                 },
-                child: Container(
-                  height: 50,
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Purchase",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
-                        color: Colors.white),
-                  ),
-                  decoration: BoxDecoration(
-                      color: Colors.green,
-                      borderRadius: BorderRadius.circular(15)),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.green, // Set the background color to green
                 ),
+                child: Text('Pay Now', style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700, color: Colors.white)),
               ),
-
-              SizedBox(height: 2),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class PaymentSuccessPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Payment Success'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.check_circle,
+              color: Colors.green,
+              size: 100,
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Payment Successful!',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
       ),
     );
