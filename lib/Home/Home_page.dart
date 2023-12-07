@@ -56,7 +56,7 @@ class HomePageState extends State<HomePage>{
               children: [
 
                 Padding(
-                  padding: const EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.only(right: 350),
                   child: Image.asset('assets/images/facebook.png', height: 50),
                 ),
 

@@ -28,7 +28,7 @@ class _PaymentPageState extends State<PaymentPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text('Payment', style: TextStyle(fontSize: 25 ,fontWeight: FontWeight.bold)),
+        title: Text('Payment', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -173,10 +173,10 @@ class _PaymentPageState extends State<PaymentPage> {
               ElevatedButton(
                 onPressed: () {
                   // Implement your payment logic here
-                  // For this example, navigate to a success page
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => PaymentSuccessPage()),
+                  // For this example, show a bottom sheet
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) => PaymentBottomSheet(),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -192,31 +192,64 @@ class _PaymentPageState extends State<PaymentPage> {
   }
 }
 
-class PaymentSuccessPage extends StatelessWidget {
+class PaymentBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Payment Success'),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.check_circle,
-              color: Colors.green,
-              size: 100,
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Payment Successful!',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(40.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: EdgeInsets.only(top: 70),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Total Amount',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      '\$100.00',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+              SizedBox(height: 20),
+              Icon(
+                Icons.check_circle,
+                color: Colors.green,
+                size: 100,
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Payment Successful!',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
         ),
       ),
     );

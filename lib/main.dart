@@ -8,6 +8,7 @@ import 'package:medinfo/Payment/Payment_page.dart';
 import 'package:medinfo/Profile/Profile_page.dart';
 
 import 'Logins/Login.dart';
+import 'Medicine/Medicine_Categories.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,7 +55,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomePage(),
+      home: Login(),
     );
   }
 }
