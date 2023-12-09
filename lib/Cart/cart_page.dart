@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:medinfo/Medicine/Detail_page.dart';
 
 import '../Payment/Payment_page.dart';
 

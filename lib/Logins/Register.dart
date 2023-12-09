@@ -3,9 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Login.dart';
 
-class Register extends StatelessWidget {
-  const Register({super.key});
-
+class Register extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return RegisterState();
+  }
+}
+class RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +19,7 @@ class Register extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top:80,),
+              padding: const EdgeInsets.all(18),
               child: Center(
                 child: Icon(Icons.lock,
                 size: 100,),
@@ -23,7 +28,7 @@ class Register extends StatelessWidget {
             //image
             //Image.asset("assets/images/Logo.png")
             Padding(
-              padding: const EdgeInsets.only(top:10),
+              padding: const EdgeInsets.all(18),
               child: Center(
                 child: Text("Register", style: TextStyle(fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -34,7 +39,7 @@ class Register extends StatelessWidget {
             ),
 
             Padding(
-              padding: const EdgeInsets.all(24.0),
+              padding: const EdgeInsets.all(15.0),
               child: Row(
                 children: [
                   TextButton(
@@ -64,7 +69,7 @@ class Register extends StatelessWidget {
                       );
                     },
                     child: Container(
-                      width: 150,
+                      width: 140,
                       height: 50,
                       alignment: Alignment.center,
                       child: Text("Register",style: TextStyle(
@@ -86,6 +91,7 @@ class Register extends StatelessWidget {
                   TextFormField(
                     decoration: InputDecoration(
                         hintText: "Full Name",
+                      prefixIcon: Icon(Icons.person),
                     ),
                   ),
                   SizedBox(height: 20.0,),
