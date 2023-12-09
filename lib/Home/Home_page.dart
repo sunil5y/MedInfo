@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:medinfo/Medicine/Detail_page.dart';
+import 'package:medinfo/Medicine/Medicine_Categories.dart';
 import 'package:medinfo/Medicine/Medicine_page.dart';
 import 'package:medinfo/Profile/Profile_page.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import '../Cart/cart_page.dart';
-import '../Medicine/Medicine_Categories.dart';
 import 'Ads.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,10 +21,7 @@ class HomePageState extends State<HomePage>{
     'Tablet',
     'Liquid',
     'Capsule',
-    'Thermometer',
-    'Syringe',
-    'Spray',
-    'Cream/Ointment',
+
   ];
   static int selectedIndex = 0;
   onTappedBar(int value) {
@@ -35,34 +32,32 @@ class HomePageState extends State<HomePage>{
   }
 
   final PageController _pageController = PageController();
-  homeitems(size){
-    return SingleChildScrollView(
+  homeitems(size) {
+    final List<String> categoryImages = [
+      'assets/images/Tablet.jpg',
+      'assets/images/Liquid.jpg',
+      'assets/images/Capsule.jpg',
+    ];
 
+    return SingleChildScrollView(
       child: Container(
         height: size.height,
         width: size.width,
         child: Stack(
           children: [
             Image.asset(
-              'assets/images/background.png', // Replace with your background image URL
+              'assets/images/background.png',
               fit: BoxFit.cover,
               height: double.infinity,
               width: double.infinity,
             ),
-
-
-
-
             Column(
               children: [
-
                 Padding(
                   padding: const EdgeInsets.only(right: 350),
                   child: Image.asset('assets/images/facebook.png', height: 50),
                 ),
-
                 SizedBox(height: 30),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: TextField(
@@ -71,16 +66,18 @@ class HomePageState extends State<HomePage>{
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(right: 8.0), // Adjust the right padding as needed
+                            padding: const EdgeInsets.only(right: 8.0),
                             child: Icon(
                               Icons.search,
-                              color: Colors.deepPurple,),
+                              color: Colors.deepPurple,
+                            ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(right: 15.0), // Adjust the left padding for the camera icon as needed
+                            padding: const EdgeInsets.only(right: 15.0),
                             child: Icon(
                               Icons.camera_alt,
-                              color: Colors.deepPurple,), // Add your camera icon here
+                              color: Colors.deepPurple,
+                            ),
                           ),
                         ],
                       ),
@@ -93,85 +90,89 @@ class HomePageState extends State<HomePage>{
                         borderSide: BorderSide(color: Colors.blue),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 20), // Adjust the padding as needed
+                      contentPadding: EdgeInsets.symmetric(horizontal: 20),
                     ),
                   ),
                 ),
-
-
                 SizedBox(height: 20),
-
                 Column(
                   children: [
                     Padding(
                       padding: EdgeInsets.only(right: 235.0),
-                      child: const Text('Explore Categories',
+                      child: const Text(
+                        'Explore Categories',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                        ),),
+                        ),
+                      ),
                     )
-
                   ],
                 ),
-
                 SizedBox(height: 5),
-
                 Container(
                   height: 150,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: 7,
+                    itemCount: 3,
                     itemBuilder: (context, index) {
                       return Container(
-               
                         width: 110,
-                        margin: EdgeInsets.all(8),
+                        margin: EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.cyan[50],),
-                        child:ClipRRect(
                           borderRadius: BorderRadius.circular(15),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // Example Image Widget
-                              Image.asset(
-                                'assets/images/thermometer.jpg', // Replace with your image URL
-                                width: 120,
-                                height: 100,
-                                fit: BoxFit.cover,
+                          color: Colors.cyan[50],
+                        ),
+                        child: GestureDetector(
+                          onTap: () {
+                            // Navigate to another page
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailPage(),
                               ),
-
-                              // Example Heading Text
-                              SizedBox(height: 8),
-
-                              Text(
-                                categoryImages[index],
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
+                            );
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  categoryImages[index],
+                                  width: 120,
+                                  height: 100,
+                                  fit: BoxFit.cover,
                                 ),
-                              ),
-                            ],
+                                SizedBox(height: 8),
+                                Text(
+                                  categoryImages[index]
+                                      .split('/')
+                                      .last
+                                      .split('.')
+                                      .first, // Extracting title from the image path
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       );
                     },
                   ),
                 ),
-
                 Ads(),
-
-
               ],
             ),
           ],
         ),
       ),
     );
-
   }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
