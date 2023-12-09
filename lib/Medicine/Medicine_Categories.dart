@@ -3,7 +3,7 @@ import 'package:medinfo/Medicine/Medicine_page.dart';
 
 class Medicine_Categories extends StatelessWidget {
   final List<String> categoryTitles = [
-    'Allw',
+    'All',
     'Tablet',
     'Liquid',
     'Capsule',
