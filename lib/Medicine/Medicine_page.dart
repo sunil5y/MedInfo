@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'Detail_page.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
 class MedicineFilter {
   final String name;
   final String category;
@@ -13,27 +9,16 @@ class MedicineFilter {
   MedicineFilter({required this.name, required this.category});
 }
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        backgroundColor: Colors.red, // Change the primary color to your preference
-      ),
-      title: 'Medicine',
-      home: MedicineList(),
-    );
-  }
-}
+class MedicinePage extends StatefulWidget {
+  final String? selectedCategory;
 
-class MedicineList extends StatefulWidget {
+  MedicinePage({this.selectedCategory});
 
   @override
   _MedicineListState createState() => _MedicineListState();
 }
 
-class _MedicineListState extends State<MedicineList> {
+class _MedicineListState extends State<MedicinePage> {
   TextEditingController searchController = TextEditingController();
 
   List<MedicineFilter> products = [
@@ -45,24 +30,25 @@ class _MedicineListState extends State<MedicineList> {
     MedicineFilter(name: 'Doxysina', category: 'Capsule'),
   ];
 
-  Map<String, List<MedicineFilter>> categoryMap = {};
-
   List<MedicineFilter> filteredProducts = [];
-  Set<String> uniqueCategories = Set<String>();
+
   Set<String> selectedCategories = Set<String>();
+
+  Set<String> allCategories = Set<String>();
 
   @override
   void initState() {
     super.initState();
-    uniqueCategories = Set.from(products.map((product) => product.category));
-    uniqueCategories.add('All'); // Add "All" category option
 
-    for (String category in uniqueCategories) {
-      categoryMap[category] = products.where((product) => product.category == category).toList();
+    allCategories = Set.from(products.map((product) => product.category));
+
+    if (widget.selectedCategory != null) {
+      selectedCategories.add(widget.selectedCategory!);
+      filterList();
+    } else {
+      selectedCategories = allCategories;
     }
 
-    selectedCategories.add('All'); // Initially select "All"
-    filteredProducts = products;
     searchController.addListener(() {
       filterList();
     });
@@ -73,12 +59,12 @@ class _MedicineListState extends State<MedicineList> {
       if (selectedCategories.contains('All')) {
         filteredProducts = products
             .where((product) =>
-            product.category.toLowerCase().contains(searchController.text.toLowerCase()))
+            product.name.toLowerCase().contains(searchController.text.toLowerCase()))
             .toList();
       } else {
         filteredProducts = products
             .where((product) =>
-        product.category.toLowerCase().contains(searchController.text.toLowerCase()) &&
+        product.name.toLowerCase().contains(searchController.text.toLowerCase()) &&
             selectedCategories.contains(product.category))
             .toList();
       }
@@ -104,27 +90,49 @@ class _MedicineListState extends State<MedicineList> {
               padding: const EdgeInsets.all(8.0),
               child: Wrap(
                 spacing: 8.0,
-                children: uniqueCategories
-                    .map((category) => ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      if (selectedCategories.contains(category)) {
-                        selectedCategories.remove(category);
-                      } else {
-                        selectedCategories.clear();
-                        selectedCategories.add(category);
-                      }
-                    });
-                    filterList();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: selectedCategories.contains(category)
-                        ? Theme.of(context).primaryColorLight
-                        : Theme.of(context).backgroundColor,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        if (selectedCategories.contains('All')) {
+                          selectedCategories.remove('All');
+                        } else {
+                          selectedCategories.clear();
+                          selectedCategories.add('All');
+                        }
+                      });
+                      filterList();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: selectedCategories.contains('All')
+                          ? Theme.of(context).primaryColorLight
+                          : Theme.of(context).backgroundColor,
+                    ),
+                    child: Text('All'),
                   ),
-                  child: Text(category),
-                ))
-                    .toList(),
+                  ...allCategories
+                      .where((category) => category != 'All')
+                      .map((category) => ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        if (selectedCategories.contains(category)) {
+                          selectedCategories.remove(category);
+                        } else {
+                          selectedCategories.clear();
+                          selectedCategories.add(category);
+                        }
+                      });
+                      filterList();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: selectedCategories.contains(category)
+                          ? Theme.of(context).primaryColorLight
+                          : Theme.of(context).backgroundColor,
+                    ),
+                    child: Text(category),
+                  ))
+                      .toList(),
+                ],
               ),
             ),
 
@@ -135,7 +143,7 @@ class _MedicineListState extends State<MedicineList> {
               child: TextField(
                 controller: searchController,
                 decoration: InputDecoration(
-                  labelText: 'Search by Category',
+                  labelText: 'Search by Medicine',
                   suffixIcon: Icon(Icons.search),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.blue),
@@ -165,18 +173,19 @@ class _MedicineListState extends State<MedicineList> {
                         ),
                       );
                     },
-                    child: Container(
-                      margin: EdgeInsets.all(4.0), // Add space around each list item
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.red,
-                          width: 2.0,
-                        ),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
+                    child: Card(
+                      color: Colors.lightBlueAccent, // Change the color for the card
+                      elevation: 5.0,
+                      margin: EdgeInsets.all(8.0),
                       child: ListTile(
-                        title: Text(filteredProducts[index].name),
-                        subtitle: Text(filteredProducts[index].category),
+                        title: Text(
+                          filteredProducts[index].name,
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(
+                          filteredProducts[index].category,
+                          style: TextStyle(fontSize: 16),
+                        ),
                       ),
                     ),
                   );

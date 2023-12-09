@@ -28,7 +28,7 @@ class _PaymentPageState extends State<PaymentPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text('Payment', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+        title: Center(child: Text('Payment', style: TextStyle(fontSize: 25, fontWeight: FontWeight.w400, color: Colors.white))),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -192,6 +192,7 @@ class _PaymentPageState extends State<PaymentPage> {
   }
 }
 
+
 class PaymentBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -203,6 +204,88 @@ class PaymentBottomSheet extends StatelessWidget {
           topRight: Radius.circular(20),
         ),
       ),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'Selected Payment Method:',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+            // Display the selected payment method
+            Text(
+              'Esewa',
+              style: TextStyle(fontSize: 16, color: Colors.green),
+            ),
+            SizedBox(height: 20),
+
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Esewa ID',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: '',
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            SizedBox(height: 20),
+
+            Text(
+              'Delivery Address',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+
+            ElevatedButton(
+              onPressed: () {
+                // Implement your payment logic here
+                // For this example, show a success message
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Center(child: Text('Payment Successful!', style: TextStyle(fontSize: 18),)),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+                // Close the bottom sheet
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.green, // Set the background color to green
+              ),
+              child: Text('Confirm Payment', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+/*
+class PaymentBottomSheet extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      /*
       child: Center(
         child: Padding(
           padding: const EdgeInsets.all(40.0),
@@ -251,7 +334,10 @@ class PaymentBottomSheet extends StatelessWidget {
             ],
           ),
         ),
-      ),
+
+       */
     );
   }
 }
+
+ */

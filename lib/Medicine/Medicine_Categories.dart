@@ -1,53 +1,97 @@
 import 'package:flutter/material.dart';
+import 'package:medinfo/Medicine/Medicine_page.dart';
 
 class Medicine_Categories extends StatelessWidget {
+  final List<String> categoryTitles = [
+    'All',
+    'Tablet',
+    'Liquid',
+    'Capsule',
+    'Thermometer',
+    'Syringe',
+    'Spray',
+    'Cream/Ointment',
+  ];
+
+  final List<String> categoryImages = [
+    'assets/images/all.jpg',
+    'assets/images/Tablet.jpg',
+    'assets/images/Liquid.jpg',
+    'assets/images/Capsule.jpg',
+    'assets/images/thermometer.jpg',
+    'assets/images/syringe.jpg',
+    'assets/images/spray.jpg',
+    'assets/images/cream.jpg',
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Medicine Categories',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Medicine Categories',
+          style: TextStyle(fontSize: 23, fontWeight: FontWeight.w700, color: Colors.white),
         ),
-        body: GridView.count(
-          crossAxisCount: 3,
-          padding: EdgeInsets.all(16.0),
-          mainAxisSpacing: 8.0,
-          crossAxisSpacing: 8.0,
-          children: [
-            _buildCategoryButton('Tablet', 'assets/images/tablet.jpg'),
-            _buildCategoryButton('Liquid', 'assets/images/liquid1.jpg'),
-            _buildCategoryButton('Capsule', 'assets/images/capsule.jpg'),
-            _buildCategoryButton('Thermometer', 'assets/images/thermometer.jpg'),
-            _buildCategoryButton('Syringe', 'assets/images/syringe.jpg'),
-            _buildCategoryButton('Spray', 'assets/images/spray.jpg'),
-            _buildCategoryButton('Cream/Ointment', 'assets/images/cream.jpg'),
-          ],
+        centerTitle: true,
+        backgroundColor: Colors.blue,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 16.0,
+            mainAxisSpacing: 16.0,
+            childAspectRatio: 0.8,
+          ),
+          itemCount: categoryTitles.length,
+          itemBuilder: (context, index) {
+            return buildCategoryButton(context, categoryTitles[index], categoryImages[index]);
+          },
         ),
       ),
     );
   }
 
-  Widget _buildCategoryButton(String title, String imagePath) {
-    return Column(
-      children: [
-        Image.asset(
-          imagePath,
-          width: 80,
-          height: 80,
-          fit: BoxFit.cover,
+  Widget buildCategoryButton(BuildContext context, String title, String imagePath) {
+    return GestureDetector(
+      onTap: () {
+        // Navigate to another page
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MedicinePage(selectedCategory: title),
+          ),
+        );
+      },
+      child: Card(
+        elevation: 8.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
         ),
-        SizedBox(height: 8),
-        Text(
-          title,
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
+                child: Image.asset(
+                  imagePath,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
-
