@@ -110,59 +110,62 @@ class HomePageState extends State<HomePage>{
                   ],
                 ),
                 SizedBox(height: 5),
-                Center(
-                  child: Container(
-                    height: 150,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          width: 110,
-                          margin: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.cyan[50],
-                          ),
-                          child: GestureDetector(
-                            onTap: () {
-                              // Navigate to another page
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => DetailPage(),
-                                ),
-                              );
-                            },
-                            child: ClipRRect(
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Center(
+                    child: Container(
+                      height: 150,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 3,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            width: 90,
+                            margin: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    categoryImages[index],
-                                    width: 120,
-                                    height: 100,
-                                    fit: BoxFit.cover,
+                              color: Colors.cyan[50],
+                            ),
+                            child: GestureDetector(
+                              onTap: () {
+                                // Navigate to another page
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DetailPage(),
                                   ),
-                                  SizedBox(height: 8),
-                                  Text(
-                                    categoryImages[index]
-                                        .split('/')
-                                        .last
-                                        .split('.')
-                                        .first, // Extracting title from the image path
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
+                                );
+                              },
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      categoryImages[index],
+                                      width: 120,
+                                      height: 100,
+                                      fit: BoxFit.cover,
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(height: 8),
+                                    Text(
+                                      categoryImages[index]
+                                          .split('/')
+                                          .last
+                                          .split('.')
+                                          .first, // Extracting title from the image path
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
