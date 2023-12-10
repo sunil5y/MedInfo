@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:medinfo/Medicine/Detail_page.dart';
+
 
 import '../Payment/Payment_page.dart';
 
@@ -27,6 +27,22 @@ class _MyCartState extends State<MyCart> {
     'https://m.media-amazon.com/images/I/41-bx-fCENL._SY466_.jpg',
     'https://i0.wp.com/www.lifesaverpharma.com/wp-content/uploads/2021/08/doxysina.jpg?fit=600%2C399&ssl=1',
   ];
+  List<int> quantities = List.filled(6,1);
+
+
+  void increaseQuantity(int index) {
+    setState((){
+      quantities[index]++;
+    });
+  }
+
+  void decreaseQuantity(int index) {
+    if (quantities[index] > 1) {
+      setState(() {
+        quantities[index]--;
+      });
+    }
+  }
 
 
   @override
@@ -88,10 +104,40 @@ class _MyCartState extends State<MyCart> {
                                   Text(medicineUnit[index].toString() + " "+ r"NRS "+ medicinePrice[index].toString(),
                                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
                                   ),
+                                  SizedBox(height:10),
+
+                                   Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Container(
+                                      height: 30,
+                                      width: 100,
+                                      decoration: BoxDecoration(
+                                        color: Colors.green,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            IconButton(
+                                              icon: Icon(Icons.remove, color: Colors.white,),
+                                              onPressed: () => decreaseQuantity(index),
+                                            ),
+                                            Text(quantities[index].toString(), style: TextStyle(color: Colors.white)),
+                                            IconButton(
+                                              icon: Icon(Icons.add, color: Colors.white),
+                                              onPressed: () => increaseQuantity(index),
+                                            ),
+                                          ],
+
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+
                                   SizedBox(height:8),
-
-
-
                                   TextButton(
                                     onPressed: () {
                                       Navigator.push(
