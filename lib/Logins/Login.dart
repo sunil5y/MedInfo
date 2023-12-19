@@ -4,8 +4,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Register.dart';
 
-class Login extends StatelessWidget {
-  bool obscureTexts = false;
+class Login extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return LoginState();
+  }
+}
+class LoginState extends State<Login> {
+  bool passwordVisible=false;
+
+  @override
+  void initState(){
+    super.initState();
+    passwordVisible=true;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,13 +108,22 @@ class Login extends StatelessWidget {
                     height: 20.0,
                   ),
                   TextFormField(
-                    obscureText: !obscureTexts,
+                    obscureText: passwordVisible,
                     decoration: InputDecoration(
-                        hintText: "Password",
-                        prefixIcon: Icon(Icons.lock),
-                        suffixIcon: Icon(obscureTexts
-                            ? Icons.visibility_off
-                            : Icons.visibility_off)),
+                      hintText: "Password",
+                      prefixIcon: Icon(Icons.lock),
+                      suffixIcon: IconButton(
+                        icon: Icon(passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off),
+                        onPressed: () {
+                          setState(
+                                () {
+                              passwordVisible = !passwordVisible;
+                            },
+                          );
+                        },
+                      ),),
                   ),
                   SizedBox(
                     height: 20.0,
@@ -163,4 +185,6 @@ class Login extends StatelessWidget {
       ),
     );
   }
-}
+  }
+
+
