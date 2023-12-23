@@ -19,7 +19,7 @@ class Medicine_Categories extends StatelessWidget {
     'assets/images/Liquid.jpg',
     'assets/images/Capsule.jpg',
     'assets/images/thermometer.jpg',
-    'assets/images/syringe.jpg',
+    'assets/images/Syringe.jpg',
     'assets/images/spray.jpg',
     'assets/images/cream.jpg',
   ];
@@ -33,22 +33,33 @@ class Medicine_Categories extends StatelessWidget {
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
         ),
         centerTitle: true,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.green,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 8.0,
-            mainAxisSpacing: 8.0,
-            childAspectRatio: 0.8,
+      body: Stack(
+        children: [
+          // Background Image
+          Image.asset(
+            'assets/images/b.jpg',
+            fit: BoxFit.cover,
+            height: double.infinity,
+            width: double.infinity,
           ),
-          itemCount: categoryTitles.length,
-          itemBuilder: (context, index) {
-            return buildCategoryButton(context, categoryTitles[index], categoryImages[index]);
-          },
-        ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 8.0,
+                mainAxisSpacing: 8.0,
+                childAspectRatio: 0.8,
+              ),
+              itemCount: categoryTitles.length,
+              itemBuilder: (context, index) {
+                return buildCategoryButton(context, categoryTitles[index], categoryImages[index]);
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

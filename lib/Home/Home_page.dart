@@ -46,67 +46,71 @@ class HomePageState extends State<HomePage>{
         child: Stack(
           children: [
             Image.asset(
-              'assets/images/background.png',
+              'assets/images/b.jpg',
               fit: BoxFit.cover,
               height: double.infinity,
               width: double.infinity,
             ),
             Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 350),
-                  child: Image.asset('assets/images/facebook.png', height: 50),
-                ),
-                SizedBox(height: 30),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      suffixIcon: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: Icon(
-                              Icons.search,
-                              color: Colors.deepPurple,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 15.0),
-                            child: Icon(
-                              Icons.camera_alt,
-                              color: Colors.deepPurple,
-                            ),
-                          ),
-                        ],
-                      ),
-                      hintText: 'Search...',
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blue),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blue),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20),
-                Column(
+                Row(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(right: 235.0),
+                      padding: const EdgeInsets.only(left: 15.0, top: 30),
+                      child: Image.asset('assets/images/logo.png', height: 80),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20.0, top: 50),
+                      child: const Text(
+                        'Live Healthier',
+                        style: TextStyle(
+                            fontFamily: 'cursive',
+                            fontSize: 45,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.green
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30),
+                Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 15.0),
                       child: const Text(
                         'Explore Categories',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
+                          color: Colors.black54
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 90.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Medicine_Categories()    ,
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'View All',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green,
+                            decoration: TextDecoration.underline,
+                            decorationColor: Colors.green,
+                          ),
                         ),
                       ),
                     )
+
                   ],
                 ),
                 SizedBox(height: 5),
@@ -166,6 +170,41 @@ class HomePageState extends State<HomePage>{
                     ),
                   ),
                 ),
+
+                Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    child: Container(
+                      width: 320, // Take the full width available
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.lightGreen,
+                            Colors.lightBlue,
+                          ],
+                          begin: Alignment.centerRight,
+                          end: Alignment.centerLeft,
+                          stops: [0.0, 0.9],
+                        ),
+                        borderRadius: BorderRadius.circular(20.0), // Adjust the radius as needed
+                      ),
+                      padding: EdgeInsets.all(8), // Adjust the padding as needed
+                      child: Center(
+                        child: const Text(
+                          'Prioritizing Your Health',
+                          style: TextStyle(
+                            fontFamily: 'cursive',
+                            fontSize: 30,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+
                 Ads(),
               ],
             ),
@@ -213,7 +252,7 @@ class HomePageState extends State<HomePage>{
           selectedColor: Colors.white,
         ),
       ],
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.green,
         onTap: onTappedBar,
         selectedItemColor: Colors.transparent,
         currentIndex: selectedIndex,),
