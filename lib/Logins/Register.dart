@@ -9,6 +9,13 @@ class Register extends StatefulWidget {
 }
 
 class RegisterState extends State<Register> {
+  bool passwordVisible=false;
+
+  @override
+  void initState(){
+    super.initState();
+    passwordVisible=true;
+  }
   final RegisterAuthService _authService = RegisterAuthService();
   TextEditingController fullNameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
@@ -137,13 +144,26 @@ class RegisterState extends State<Register> {
                         SizedBox(height: 20.0),
                         TextFormField(
                           controller: passwordController,
-                          obscureText: true,
+                          obscureText: passwordVisible,
                           decoration: InputDecoration(
                             hintText: "Password",
                             prefixIcon: Icon(Icons.lock),
-                            suffixIcon: Icon(Icons.visibility),
+                            suffixIcon: IconButton(
+                              icon: Icon(passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
+                              onPressed: () {
+                                setState(
+                                      () {
+                                    passwordVisible = !passwordVisible;
+                                  },
+                                );
+                              },
+                            ),
                           ),
+
                         ),
+
                         SizedBox(height: 20.0),
                         TextButton(
                           onPressed: () async {
