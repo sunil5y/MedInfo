@@ -5,9 +5,11 @@ class MedicineFilter {
   final String name;
   final String category;
   final String imageAsset;
+  final String medicineId; // Add a field for unique identifier
 
-  MedicineFilter({required this.name, required this.category, required this.imageAsset});
+  MedicineFilter({required this.name, required this.category, required this.imageAsset, required this.medicineId});
 }
+
 
 class MedicinePage extends StatefulWidget {
   final String? selectedCategory;
@@ -22,16 +24,17 @@ class _MedicineListState extends State<MedicinePage> {
   TextEditingController searchController = TextEditingController();
 
   List<MedicineFilter> products = [
-    MedicineFilter(name: 'Paracetamol', category: 'Tablet', imageAsset: 'assets/images/Tablet.jpg'),
-    MedicineFilter(name: 'Niko', category: 'Tablet', imageAsset: 'assets/images/Tablet.jpg'),
-    MedicineFilter(name: 'Gaviscon', category: 'Liquid', imageAsset: 'assets/images/Liquid.jpg'),
-    MedicineFilter(name: 'Vicks', category: 'Liquid', imageAsset: 'assets/images/Liquid.jpg'),
-    MedicineFilter(name: 'Amoxycillin', category: 'Capsule', imageAsset: 'assets/images/Capsule.jpg'),
-    MedicineFilter(name: 'Doxysina', category: 'Capsule', imageAsset: 'assets/images/Capsule.jpg'),
-    MedicineFilter(name: 'Vitamin', category: 'Syringe', imageAsset: 'assets/images/Syringe.jpg'),
-    MedicineFilter(name: 'Moov', category: 'Spray', imageAsset: 'assets/images/spray.jpg'),
-    MedicineFilter(name: 'Toothpaste', category: 'Cream/Ointment', imageAsset: 'assets/images/cream.jpg'),
+    MedicineFilter(name: 'Paracetamol', category: 'Tablet', imageAsset: 'assets/images/Tablet.jpg', medicineId: 'Paracetamol'),
+    MedicineFilter(name: 'Niko', category: 'Tablet', imageAsset: 'assets/images/Tablet.jpg', medicineId: 'Niko'),
+    MedicineFilter(name: 'Gaviscon', category: 'Liquid', imageAsset: 'assets/images/Liquid.jpg', medicineId: 'Gaviscon'),
+    MedicineFilter(name: 'Vicks', category: 'Liquid', imageAsset: 'assets/images/Liquid.jpg', medicineId: 'Vicks'),
+    MedicineFilter(name: 'Amoxicillin', category: 'Capsule', imageAsset: 'assets/images/Capsule.jpg', medicineId: 'Amoxicillin'),
+    MedicineFilter(name: 'Doxysina', category: 'Capsule', imageAsset: 'assets/images/Capsule.jpg', medicineId: 'Doxysina'),
+    MedicineFilter(name: 'Vitamin', category: 'Syringe', imageAsset: 'assets/images/Syringe.jpg', medicineId: 'Vitamin'),
+    MedicineFilter(name: 'Moov', category: 'Spray', imageAsset: 'assets/images/spray.jpg', medicineId: 'Moov'),
+    MedicineFilter(name: 'Toothpaste', category: 'Cream/Ointment', imageAsset: 'assets/images/cream.jpg', medicineId: 'Toothpaste'),
   ];
+
 
   List<MedicineFilter> filteredProducts = [];
 
@@ -204,7 +207,9 @@ class _MedicineListState extends State<MedicinePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => DetailPage(),
+                          builder: (context) => DetailPage(
+                            medicine: filteredProducts[index], // Pass the selected medicine
+                          ),
                         ),
                       );
                     },

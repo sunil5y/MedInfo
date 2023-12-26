@@ -11,10 +11,12 @@ class Favourites extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.green,
           title: Text(
             'Favourites',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
           ),
+          centerTitle: true,
         ),
       ),
     );

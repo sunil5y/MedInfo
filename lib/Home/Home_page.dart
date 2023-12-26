@@ -5,7 +5,7 @@ import 'package:medinfo/Medicine/Medicine_page.dart';
 import 'package:medinfo/Profile/Profile_page.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
-import '../Cart/cart_page.dart';
+import '../Cart/Cart_page.dart';
 import 'Ads.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,12 +17,6 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage>{
-  final List<String> categoryImages = [
-    'Tablet',
-    'Liquid',
-    'Capsule',
-
-  ];
   static int selectedIndex = 0;
   onTappedBar(int value) {
     setState(() {
@@ -33,11 +27,17 @@ class HomePageState extends State<HomePage>{
 
   final PageController _pageController = PageController();
   homeitems(size) {
+
     final List<String> categoryImages = [
       'assets/images/Tablet.jpg',
       'assets/images/Liquid.jpg',
       'assets/images/Capsule.jpg',
     ];
+
+    String getCategoryFromImagePath(String imagePath) {
+      // Assuming the image path follows the format 'assets/images/{Category}.jpg'
+      return imagePath.split('/').last.split('.').first;
+    }
 
     return SingleChildScrollView(
       child: Container(
@@ -134,7 +134,7 @@ class HomePageState extends State<HomePage>{
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => DetailPage(),
+                                  builder: (context) => MedicinePage(selectedCategory: getCategoryFromImagePath(categoryImages[index])),
                                 ),
                               );
                             },
@@ -223,7 +223,7 @@ class HomePageState extends State<HomePage>{
         children: [
           homeitems(size),
           Medicine_Categories(),
-          MyCart(),
+          MyCart(cartItems: [],),
           Profile(),
         ],
       ),

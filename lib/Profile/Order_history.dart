@@ -7,10 +7,12 @@ class Order_History extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.green,
           title: Text(
             'Order History',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
           ),
+          centerTitle: true,
         ),
       ),
     );

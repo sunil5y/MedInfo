@@ -231,10 +231,10 @@ class EditProfileDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Container(
-        width: 800,
-      ),
-      contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 20), // Adjust as needed
+      contentPadding: EdgeInsets.symmetric(horizontal: 1, vertical: 20), // Set the horizontal padding to control the width
+      //title: Container(
+      //  width: 1000,
+      // ),
       content: SingleChildScrollView(
         child: Column(
           children: [
