@@ -38,6 +38,8 @@ dependencies:
   google_nav_bar: ^5.0.6
   firebase_auth: ^4.15.0
   firebase_core: ^2.24.0
+  firebase_database:
+
   cloud_firestore:
   badges: ^2.0.1
   location:
