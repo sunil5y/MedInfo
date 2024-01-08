@@ -1,16 +1,28 @@
+// Import necessary packages and files
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../Profile/Favourites.dart';
 import 'Detail_page.dart';
 
+// Model class representing a filtered medicine with additional details
 class MedicineFilter {
   final String name;
   final String category;
   final String imageAsset;
-  final String medicineId; // Add a field for unique identifier
+  final String medicineId; // Add a field for a unique identifier
+  bool isFavorite; // Add a field for favorite status
 
-  MedicineFilter({required this.name, required this.category, required this.imageAsset, required this.medicineId});
+  MedicineFilter({
+    required this.name,
+    required this.category,
+    required this.imageAsset,
+    required this.medicineId,
+    this.isFavorite = false, // Default to not being a favorite
+  });
 }
 
-
+// Stateful widget representing the page displaying a list of medicines
 class MedicinePage extends StatefulWidget {
   final String? selectedCategory;
 
@@ -20,32 +32,29 @@ class MedicinePage extends StatefulWidget {
   _MedicineListState createState() => _MedicineListState();
 }
 
+// State class for the MedicinePage widget
 class _MedicineListState extends State<MedicinePage> {
   TextEditingController searchController = TextEditingController();
 
+  // List of MedicineFilter objects representing available medicines
   List<MedicineFilter> products = [
-    MedicineFilter(name: 'Paracetamol', category: 'Tablet', imageAsset: 'assets/images/Tablet.jpg', medicineId: 'Paracetamol'),
-    MedicineFilter(name: 'Niko', category: 'Tablet', imageAsset: 'assets/images/Tablet.jpg', medicineId: 'Niko'),
-    MedicineFilter(name: 'Gaviscon', category: 'Liquid', imageAsset: 'assets/images/Liquid.jpg', medicineId: 'Gaviscon'),
-    MedicineFilter(name: 'Vicks', category: 'Liquid', imageAsset: 'assets/images/Liquid.jpg', medicineId: 'Vicks'),
-    MedicineFilter(name: 'Amoxicillin', category: 'Capsule', imageAsset: 'assets/images/Capsule.jpg', medicineId: 'Amoxicillin'),
-    MedicineFilter(name: 'Doxysina', category: 'Capsule', imageAsset: 'assets/images/Capsule.jpg', medicineId: 'Doxysina'),
-    MedicineFilter(name: 'Vitamin', category: 'Syringe', imageAsset: 'assets/images/Syringe.jpg', medicineId: 'Vitamin'),
-    MedicineFilter(name: 'Moov', category: 'Spray', imageAsset: 'assets/images/spray.jpg', medicineId: 'Moov'),
-    MedicineFilter(name: 'Toothpaste', category: 'Cream/Ointment', imageAsset: 'assets/images/cream.jpg', medicineId: 'Toothpaste'),
+    // Initialize with sample medicine data
+    // ... (more medicine items)
   ];
 
-
   List<MedicineFilter> filteredProducts = [];
+  List<MedicineFilter> favoriteMedicines = [];
 
+  // Set to keep track of selected medicine categories
   Set<String> selectedCategories = Set<String>();
-
+  // Set to store all unique medicine categories
   Set<String> allCategories = Set<String>();
 
   @override
   void initState() {
     super.initState();
 
+    // Initialize categories and filter list
     allCategories = Set.from(products.map((product) => product.category));
 
     if (widget.selectedCategory != null) {
@@ -55,19 +64,23 @@ class _MedicineListState extends State<MedicinePage> {
       selectedCategories = allCategories;
     }
 
+    // Add listener to search input for real-time filtering
     searchController.addListener(() {
       filterList();
     });
   }
 
+  // Method to filter the list of medicines based on selected categories and search input
   void filterList() {
     setState(() {
       if (selectedCategories.contains('All')) {
+        // Filter all medicines when 'All' category is selected
         filteredProducts = products
             .where((product) =>
             product.name.toLowerCase().contains(searchController.text.toLowerCase()))
             .toList();
       } else {
+        // Filter medicines based on selected categories and search input
         filteredProducts = products
             .where((product) =>
         product.name.toLowerCase().contains(searchController.text.toLowerCase()) &&
@@ -77,14 +90,49 @@ class _MedicineListState extends State<MedicinePage> {
     });
   }
 
+  // Reference to the Firestore collection for user favorites
+  CollectionReference favoritesCollection = FirebaseFirestore.instance.collection('Favorites');
+
+  // Method to toggle the favorite status of a medicine
+  void toggleFavoriteStatus(int index) {
+    setState(() {
+      // Toggle the favorite status of the selected medicine
+      filteredProducts[index].isFavorite = !filteredProducts[index].isFavorite;
+
+      if (filteredProducts[index].isFavorite) {
+        // Add to Firebase favorites collection
+        favoritesCollection.add({
+          'name': filteredProducts[index].name,
+          'category': filteredProducts[index].category,
+          'imageAsset': filteredProducts[index].imageAsset,
+          'medicineId': filteredProducts[index].medicineId,
+          'userEmail': FirebaseAuth.instance.currentUser!.email, // Use email as the identifier
+        });
+      } else {
+        // Remove from Firebase favorites collection
+        favoritesCollection
+            .where('medicineId', isEqualTo: filteredProducts[index].medicineId)
+            .where('userEmail', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+            .get()
+            .then((querySnapshot) {
+          for (DocumentSnapshot ds in querySnapshot.docs) {
+            ds.reference.delete();
+          }
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // App bar with title
       appBar: AppBar(
         backgroundColor: Colors.green,
         title: Text('Medicine List', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
       ),
       body: Container(
+        // Background image
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/b.jpg'), // Replace with your image asset path
@@ -94,13 +142,15 @@ class _MedicineListState extends State<MedicinePage> {
         child: Column(
           children: [
             SizedBox(height: 10),
+            // Horizontal scrolling category filter buttons
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(left: 15),
                 child: Wrap(
                   spacing: 8.0,
                   children: [
+                    // 'All' category filter button
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
@@ -116,6 +166,7 @@ class _MedicineListState extends State<MedicinePage> {
                       ),
                       child: ElevatedButton(
                         onPressed: () {
+                          // Toggle 'All' category filter
                           setState(() {
                             if (selectedCategories.contains('All')) {
                               selectedCategories.remove('All');
@@ -124,6 +175,7 @@ class _MedicineListState extends State<MedicinePage> {
                               selectedCategories.add('All');
                             }
                           });
+                          // Filter the list accordingly
                           filterList();
                         },
                         style: ElevatedButton.styleFrom(
@@ -136,6 +188,7 @@ class _MedicineListState extends State<MedicinePage> {
                         ),
                       ),
                     ),
+                    // Other category filter buttons
                     ...allCategories
                         .where((category) => category != 'All')
                         .map((category) => Container(
@@ -153,6 +206,7 @@ class _MedicineListState extends State<MedicinePage> {
                       ),
                       child: ElevatedButton(
                         onPressed: () {
+                          // Toggle selected category filter
                           setState(() {
                             if (selectedCategories.contains(category)) {
                               selectedCategories.remove(category);
@@ -161,6 +215,7 @@ class _MedicineListState extends State<MedicinePage> {
                               selectedCategories.add(category);
                             }
                           });
+                          // Filter the list accordingly
                           filterList();
                         },
                         style: ElevatedButton.styleFrom(
@@ -179,8 +234,9 @@ class _MedicineListState extends State<MedicinePage> {
               ),
             ),
             SizedBox(height: 15),
+            // Search input field
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(left: 20, right: 15),
               child: TextField(
                 controller: searchController,
                 decoration: InputDecoration(
@@ -197,13 +253,15 @@ class _MedicineListState extends State<MedicinePage> {
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
+            // List of filtered medicines
             Expanded(
               child: ListView.builder(
                 itemCount: filteredProducts.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
+                      // Navigate to detail page when a medicine is tapped
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -215,7 +273,7 @@ class _MedicineListState extends State<MedicinePage> {
                     },
                     child: Card(
                       elevation: 12.0,
-                      margin: EdgeInsets.all(8.0),
+                      margin: EdgeInsets.only(left: 20, right: 15, bottom: 10,),
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
@@ -252,6 +310,19 @@ class _MedicineListState extends State<MedicinePage> {
                           subtitle: Text(
                             filteredProducts[index].category,
                             style: TextStyle(fontSize: 16),
+                          ),
+                          trailing: IconButton(
+                            icon: Icon(
+                              // Display filled or outlined heart icon based on favorite status
+                              filteredProducts[index].isFavorite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: Colors.deepPurple,
+                            ),
+                            onPressed: () {
+                              // Toggle the favorite status when the heart icon is pressed
+                              toggleFavoriteStatus(index);
+                            },
                           ),
                         ),
                       ),

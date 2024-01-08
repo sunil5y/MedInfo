@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'Forgot_Password.dart';
+import 'Login.dart';
 import 'firebase_auth_services.dart';
 
+// Define the Register widget
 class Register extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -8,23 +11,34 @@ class Register extends StatefulWidget {
   }
 }
 
+// Define the state of the Register widget
 class RegisterState extends State<Register> {
-  bool passwordVisible=false;
-
-  @override
-  void initState(){
-    super.initState();
-    passwordVisible=true;
-  }
-  final RegisterAuthService _authService = RegisterAuthService();
+  // Variable for managing password visibility and instances of controllers
+  bool passwordVisible = false;
   TextEditingController fullNameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  // Initialize the state
+  @override
+  void initState() {
+    super.initState();
+    // Set password visibility to true initially
+    passwordVisible = true;
+  }
+
+  // Create an instance of RegisterAuthService for handling registration
+  final RegisterAuthService _authService = RegisterAuthService();
+
   @override
   Widget build(BuildContext context) {
+    // Create an instance of AuthService for handling Google sign-in
+    AuthService authService = AuthService();
+
+    // Get the screen size
     var size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -35,14 +49,16 @@ class RegisterState extends State<Register> {
             height: double.infinity,
             width: double.infinity,
           ),
+
           SingleChildScrollView(
             child: Container(
               height: size.height,
               width: size.width,
               child: Column(
                 children: [
+                  // Logo and Title
                   Padding(
-                    padding: const EdgeInsets.only(top: 35),
+                    padding: const EdgeInsets.only(top: 60),
                     child: Center(
                         child: Image.asset('assets/images/logo.png', height: 80)),
                   ),
@@ -59,14 +75,16 @@ class RegisterState extends State<Register> {
                       ),
                     ),
                   ),
+                  // Login and Register buttons
                   Padding(
                     padding: const EdgeInsets.all(24.0),
                     child: Row(
                       children: [
+                        // Login button
                         Expanded(
                           child: TextButton(
                             onPressed: () {
-                              // Navigate to login page
+                              // Navigate to the login page
                               Navigator.pop(context);
                             },
                             child: Container(
@@ -88,6 +106,7 @@ class RegisterState extends State<Register> {
                           ),
                         ),
                         SizedBox(width: 16),
+                        // Register button
                         Expanded(
                           child: TextButton(
                             onPressed: () {
@@ -114,10 +133,12 @@ class RegisterState extends State<Register> {
                       ],
                     ),
                   ),
+                  // Full Name, Phone Number, Email, Password input fields
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: Column(
                       children: [
+                        // Full Name input field
                         TextFormField(
                           controller: fullNameController,
                           decoration: InputDecoration(
@@ -126,6 +147,7 @@ class RegisterState extends State<Register> {
                           ),
                         ),
                         SizedBox(height: 20.0),
+                        // Phone Number input field
                         TextFormField(
                           controller: phoneNumberController,
                           decoration: InputDecoration(
@@ -134,6 +156,7 @@ class RegisterState extends State<Register> {
                           ),
                         ),
                         SizedBox(height: 20.0),
+                        // Email input field
                         TextFormField(
                           controller: emailController,
                           decoration: InputDecoration(
@@ -142,6 +165,7 @@ class RegisterState extends State<Register> {
                           ),
                         ),
                         SizedBox(height: 20.0),
+                        // Password input field
                         TextFormField(
                           controller: passwordController,
                           obscureText: passwordVisible,
@@ -153,20 +177,18 @@ class RegisterState extends State<Register> {
                                   ? Icons.visibility
                                   : Icons.visibility_off),
                               onPressed: () {
-                                setState(
-                                      () {
-                                    passwordVisible = !passwordVisible;
-                                  },
-                                );
+                                setState(() {
+                                  passwordVisible = !passwordVisible;
+                                });
                               },
                             ),
                           ),
-
                         ),
-
                         SizedBox(height: 20.0),
+                        // Register button
                         TextButton(
                           onPressed: () async {
+                            // Perform registration authentication
                             await _authService.registerAuth(
                               fullname: fullNameController.text,
                               phoneno: phoneNumberController.text,
@@ -193,6 +215,8 @@ class RegisterState extends State<Register> {
                           ),
                         ),
                         SizedBox(height: 5),
+
+                        // Or Register With text
                         Align(
                           alignment: Alignment.center,
                           child: Text(
@@ -200,7 +224,27 @@ class RegisterState extends State<Register> {
                             style: TextStyle(fontSize: 15),
                           ),
                         ),
-                        // Add your login with social buttons or other registration methods here
+                        SizedBox(height: 10),
+
+                        // Google Sign-in button
+                        TextButton(
+                          onPressed: () async {
+                            // Perform Google sign-in
+                            await authService.handleSignIn();
+                            // Navigate to the Login page
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (_) => Login()));
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // Google Sign-in icon
+                              LoginWiths(
+                                  imagePath: "assets/images/google.png"),
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),

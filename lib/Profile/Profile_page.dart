@@ -1,9 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:image_picker/image_picker.dart';
 import '../Logins/Login.dart';
-import 'Downloads.dart';
 import 'Favourites.dart';
 import 'Order_history.dart';
+import 'ProfileDatabase.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -11,10 +12,29 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  // Placeholder values for user information
-  String profileImage = 'assets/images/google.png';
-  String userName = 'Rajesh Dai';
-  String userEmail = 'Rajesh.dai@gmail.com';
+  late User currentUser;
+  late Map<String, dynamic> userData = {};
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch and set user data when the widget is created
+    fetchUserData();
+  }
+
+  // Function to fetch user data
+  Future<void> fetchUserData() async {
+    try {
+      // Get the current authenticated user
+      currentUser = FirebaseAuth.instance.currentUser!;
+      // Fetch user data from Firestore
+      userData = await FirebaseService_Profile().getprofileText(currentUser.uid) ?? {};
+      // Update the UI with the fetched data
+      setState(() {});
+    } catch (e) {
+      print('Error fetching user data: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,68 +49,79 @@ class _ProfileState extends State<Profile> {
             child: Text(
               'Profile',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
-            ),
+            )
+
+
           ),
         ),
-        body: Container(
-          height: screenHeight, // Set the height of the Container
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/b.jpg'), // Set your image asset path
-              fit: BoxFit.cover,
-            ),
-          ),
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildSectionTitle('Profile Details'),
-              SizedBox(height: 10),
-
-              // Profile
-              GestureDetector(
-                onTap: () {
-                  // Handle the tap on the profile section
-                  // You can show the edit dialog or navigate to an edit page
-                  showEditDialog();
-                },
-                child: buildProfileContainer(
-                  profileImage: profileImage,
-                  userName: userName,
-                  userEmail: userEmail,
-                ),
+        body: SingleChildScrollView(
+          child: Container(
+            height: screenHeight,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/b.jpg'),
+                fit: BoxFit.cover,
               ),
+            ),
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: buildSectionTitle('Profile Details'),
+                ),
+                SizedBox(height: 10),
 
-              SizedBox(height: 40),
-              buildClickableContainer(Icons.my_library_books, 'Order History', () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Order_History()),
-                );
-              }),
-              SizedBox(height: 20),
-              buildClickableContainer(Icons.download_sharp, 'Downloads', () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Downloads()),
-                );
-              }),
-              SizedBox(height: 20),
-              buildClickableContainer(Icons.favorite_border, 'Favourites', () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Favourites()),
-                );
-              }),
-              SizedBox(height: 20),
-              buildClickableContainer(Icons.logout, 'Log Out', () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Login()),
-                );
-              }),
-              SizedBox(height: 40),
-            ],
+                // Profile
+                GestureDetector(
+                  onTap: () async {
+                    // Handle the tap on the profile section
+                    // You can show the edit dialog or navigate to an edit page
+                    await showEditDialog();
+                    // Reload user data after editing
+                    await fetchUserData();
+                  },
+                  child: buildProfileContainer(
+                    profileImage: 'assets/images/ProfilePic3.png', // You can set a default image here if needed
+                    userName: userData['fullname'] ?? 'Full Name',
+                    userEmail: userData['email'] ?? 'Email',
+                  ),
+                ),
+
+                SizedBox(height: 40),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: buildClickableContainer(Icons.my_library_books, 'Order History', () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Order_History()),
+                    );
+                  }),
+                ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: buildClickableContainer(Icons.favorite_border, 'Favourites', () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Favourites()),
+                    );
+                  }),
+                ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: buildClickableContainer(Icons.logout, 'Log Out', () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Login()),
+                    );
+                  }),
+                ),
+                SizedBox(height: 40),
+              ],
+            ),
           ),
         ),
       ),
@@ -121,15 +152,17 @@ class _ProfileState extends State<Profile> {
           width: 1.5,
         ),
         borderRadius: BorderRadius.circular(25.0),
-
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(width: 10),
-          CircleAvatar(
-            radius: 60,
-            backgroundImage: AssetImage(profileImage),
+          Padding(
+            padding: const EdgeInsets.only(top: 5, bottom: 5),
+            child: CircleAvatar(
+              radius: 45,
+              backgroundImage: AssetImage(profileImage),
+            ),
           ),
           SizedBox(width: 15),
           Column(
@@ -139,7 +172,7 @@ class _ProfileState extends State<Profile> {
               Text(
                 userName,
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -147,7 +180,7 @@ class _ProfileState extends State<Profile> {
               Text(
                 userEmail,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 15,
                   color: Colors.grey,
                 ),
               ),
@@ -217,24 +250,37 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  void showEditDialog() {
-    showDialog(
+  Future<void> showEditDialog() async {
+    await showDialog(
       context: context,
       builder: (BuildContext context) {
-        return EditProfileDialog();
+        // Pass user data to EditProfileDialog
+        return EditProfileDialog(userData: userData);
       },
     );
   }
 }
 
 class EditProfileDialog extends StatelessWidget {
+  final Map<String, dynamic> userData;
+
+  // Constructor to receive user data
+  EditProfileDialog({required this.userData});
+
+  // Create a TextEditingController for each field
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController phoneNoController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    // Initialize the controllers with the existing user data
+    fullNameController.text = userData['fullname'];
+    phoneNoController.text = userData['phoneno'];
+    emailController.text = userData['email'];
+
     return AlertDialog(
-      contentPadding: EdgeInsets.symmetric(horizontal: 1, vertical: 20), // Set the horizontal padding to control the width
-      //title: Container(
-      //  width: 1000,
-      // ),
+      // Set the horizontal padding to control the width
       content: SingleChildScrollView(
         child: Column(
           children: [
@@ -242,11 +288,13 @@ class EditProfileDialog extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 50,
-                  backgroundImage: AssetImage('assets/images/google.png'),
+                  backgroundImage: AssetImage('assets/images/ProfilePic3.png'),
                 ),
                 Positioned(
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      openCamera();
+                    },
                     icon: Icon(Icons.photo_camera),
                   ),
                   bottom: -10,
@@ -255,11 +303,24 @@ class EditProfileDialog extends StatelessWidget {
               ],
             ),
             SizedBox(height: 20),
-            buildEditField('Full Name', Icons.person, Colors.blue),
-            buildEditField('Email', Icons.email, Colors.orange),
-            buildEditField('Phone no', Icons.phone, Colors.green),
-            buildEditField('DoB', Icons.calendar_today, Colors.red),
-            buildEditField('Password', Icons.lock_open_outlined, Colors.purple),
+            buildEditField(
+              'Full Name',
+              Icons.person,
+              Colors.blue,
+              fullNameController,
+            ),
+            buildEditField(
+              'Phone no',
+              Icons.phone,
+              Colors.green,
+              phoneNoController,
+            ),
+            buildEditField(
+              'Email',
+              Icons.email,
+              Colors.orange,
+              emailController,
+            ),
           ],
         ),
       ),
@@ -269,12 +330,14 @@ class EditProfileDialog extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   // Implement the submit action
                   // Update the user information and close the dialog
+                  await updateUserData();
                   Navigator.of(context).pop();
                 },
-                child: Text('Edit Profile', style: TextStyle(fontWeight: FontWeight.w600)),
+                child: Text('Edit Profile',
+                    style: TextStyle(fontWeight: FontWeight.w600)),
               ),
               SizedBox(width: 10),
               ElevatedButton(
@@ -282,7 +345,8 @@ class EditProfileDialog extends StatelessWidget {
                   // Close the dialog without saving changes
                   Navigator.of(context).pop();
                 },
-                child: Text('Cancel', style: TextStyle(fontWeight: FontWeight.w600)),
+                child: Text(
+                    'Cancel', style: TextStyle(fontWeight: FontWeight.w600)),
               ),
             ],
           ),
@@ -291,7 +355,44 @@ class EditProfileDialog extends StatelessWidget {
     );
   }
 
-  Widget buildEditField(String label, IconData icon, Color color) {
+  Future<void> updateUserData() async {
+
+    final String fullName = fullNameController.text.trim();
+    final String phoneNo = phoneNoController.text.trim();
+    final String email = emailController.text.trim();
+
+    // Update the user data in Firebase
+    try {
+      final User currentUser = FirebaseAuth.instance.currentUser!;
+      await FirebaseService_Profile().updateUserData(
+        currentUser.uid,
+        fullName: fullName,
+        phoneNo: phoneNo,
+        email: email,
+      );
+    } catch (e) {
+      print('Error updating user data: $e');
+    }
+  }
+
+  Future<void> openCamera() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      // Handle the picked image (e.g., upload it, display it, etc.)
+      print('Image path: ${pickedFile.path}');
+    } else {
+      print('No image selected');
+    }
+  }
+
+  Widget buildEditField(
+      String label,
+      IconData icon,
+      Color color,
+      TextEditingController controller,
+      ) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
@@ -319,13 +420,15 @@ class EditProfileDialog extends StatelessWidget {
             child: Container(
               height: 30, // Set the height as needed
               child: TextField(
+                controller: controller,
+                style: TextStyle(fontSize: 14), // Adjust font size
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  contentPadding: EdgeInsets.symmetric(
+                      vertical: 5, horizontal: 10),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0), // Adjust the radius as needed
+                    borderRadius: BorderRadius.circular(15.0),
                   ),
                 ),
-                // Add your text editing controller or other properties here
               ),
             ),
           ),
