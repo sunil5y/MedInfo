@@ -48,7 +48,7 @@ class LoginState extends State<Login> {
                 children: [
                   // Logo and Title
                   Padding(
-                    padding: const EdgeInsets.only(top: 60),
+                    padding: const EdgeInsets.only(top: 40),
                     child: Center(
                         child: Image.asset('assets/images/logo.png', height: 80)),
                   ),

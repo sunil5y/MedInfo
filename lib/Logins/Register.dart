@@ -58,7 +58,7 @@ class RegisterState extends State<Register> {
                 children: [
                   // Logo and Title
                   Padding(
-                    padding: const EdgeInsets.only(top: 60),
+                    padding: const EdgeInsets.only(top: 30),
                     child: Center(
                         child: Image.asset('assets/images/logo.png', height: 80)),
                   ),

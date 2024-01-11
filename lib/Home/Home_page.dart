@@ -71,7 +71,7 @@ class HomePageState extends State<HomePage> {
                       child: Image.asset('assets/images/logo.png', height: 80),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 25, top: 50),
+                      padding: EdgeInsets.only(left: 20, top: 50),
                       child: const Text(
                         'Live Healthier',
                         style: TextStyle(
